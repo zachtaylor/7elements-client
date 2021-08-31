@@ -1,0 +1,26 @@
+<article>
+  <article-header>
+    <span class="posa bot0 rit0 fnt0">
+      <a routerLink="/account" fragment="signup">Click here</a>
+      <span> to Signup</span>
+    </span>
+    <span>
+      7 Elements Login
+    </span>
+  </article-header>
+  <article-body>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-row">
+        <label>username</label>
+        <input type="text" formControlName="username" autocomplete="username" required>
+      </div>
+      <div class="form-row">
+        <label>password</label>
+        <input type="password" formControlName="password" autocomplete="current-password" required>
+      </div>
+    </form>
+    <div class="w100 talr">
+      <button (click)="submit()"><label>Login</label></button>
+    </div>
+  </article-body>
+</article>

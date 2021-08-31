@@ -1,0 +1,30 @@
+<div class="splash"></div>
+<ng-container *ngIf="ws.ping$ | async as ping">
+  <article *ngIf="ping">
+    <article-header>
+      <span>7 Elements Online</span>
+    </article-header>
+    <article-body>
+      <h2>A brand new online card game</h2>
+      <br/>
+      <div>Free to play, in your browser! <a routerLink="/intro"> Click here </a>for an introduction</div >
+      <br/>
+      <h2>Version 0.0.3 [pending]</h2>
+      <br/>
+      <div>7 New Cards, PvP mode, improved Deck editor, and more! <a routerLink="/updates">Click here</a> for update history<br/></div>
+      <br/>
+      <span>{{ping.ping}} connected / {{ping.online}} logged in / {{ping.users}} users</span>
+      <br/>
+    </article-body>
+  </article>
+  <br/><br/>
+</ng-container>
+<article *ngIf="!account.username">
+  <article-header>No Account</article-header>
+  <article-body>
+    You are logged out
+  </article-body>
+  <article-footer>
+    Sign up for free today! <a routerLink="/account" fragment="signup">Click here</a>
+  </article-footer>
+</article>

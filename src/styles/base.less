@@ -1,0 +1,57 @@
+@import "var.less";
+@import "fonts.less";
+
+* {
+	margin:0px;
+	padding:0px;
+	box-sizing:border-box;
+}
+html {
+	height:100%;
+	user-select:none;
+	background:@darkwhite;
+	font-family:'Open Sans',Monaco,monospace;
+}
+body {
+	height:100%;
+}
+img {
+	vertical-align:text-bottom;
+}
+a {
+  font-family:@font-cursive;
+	text-decoration:none;
+	color:black;
+	border-bottom-style:solid;
+	border-bottom-width:1px;
+	animation:rainbowbox 7s infinite;
+	cursor:pointer;
+	transition:0.25s;
+}
+a:hover {
+	// color: transparent;
+	// background-clip:text;
+	// -webkit-background-clip:text;
+	// background-size:1000%;
+	// background-image:repeating-linear-gradient(
+	// 	90deg,
+	// 	black,
+	// 	white,
+	// 	yellow,
+	// 	green,
+	// 	blue,
+	// 	purple,
+	// 	red,
+	// 	white,
+	// 	black
+	// );
+  // animation:background-slide 7s infinite;
+	animation: rainbowtext 7s infinite;
+}
+header, footer {
+  display:inline-block;
+	width:100%;
+}
+[hidden] {
+	display:none !important;
+}

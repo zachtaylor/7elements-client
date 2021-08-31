@@ -1,0 +1,36 @@
+<div class="panel">
+  <span class="panel-label fntb">{{card?.name}}</span>
+  <div class="fltr">
+    <span class="card-cost" *ngFor="let el of card?.costs | mapKeys">
+      <img *ngFor="let i of card?.costs[el] | count" src="/img/icon/element-{{el}}.png">
+    </span>
+  </div>
+</div>
+<img class="art" src="/img/card/{{card?.id||0}}.jpg">
+<div class="panel">
+  <span class="panel-label">{{card?.type}}</span>
+  <span *ngIf="card?.body?.health" class="fltr">
+    <span>{{card.body.attack}}</span>
+    <img src="/img/icon/attack.20px.png">
+    <span>{{card.body.health}}</span>
+    <img src="/img/icon/life.20px.png">
+  </span>
+</div>
+<div class="card-text panel">
+  <div class="card-power" *ngFor="let power of card?.powers | mapValues">
+    <span *ngFor="let e of power.costs | mapKeys">
+      <img *ngFor="let i of power.costs[e] | count" src="/img/icon/element-{{e}}.png">
+    </span>
+    <img *ngIf="power.usesturn" src="/img/icon/timer.png">
+    <img *ngIf="power.useslife" src="/img/icon/trash.svg">
+    <b *ngIf="card.type=='being'&&!power.usesturn&&!power.useslife&&!power.trigger" class="fntb">spell</b>
+    <img *ngIf="power.trigger=='sunrise'" src="/img/icon/sunrise.svg">
+    <img *ngIf="power.trigger=='sunset'" src="/img/icon/sunset.svg">
+    <span *ngIf="card.type!='spell'">: </span>
+    <span [innerHTML]="power.text | keepHtml"></span>
+  </div>
+  <div class="card-flavor fntb">{{card?.text}}</div>
+</div>
+<div class="card-banner">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,31 @@
+<!-- nav -->
+<vii-nav></vii-nav>
+
+<!-- notifications -->
+<!-- <ng-container *ngIf="vii.messages$ | async as msgs">
+  <div *ngIf="msgs.length>0" class="posa flxr" style="width:100%;">
+    <div class="flx1"></div>
+    <div class="talc not-panel">
+      <div style="padding:21px;">
+        <div *ngFor='let msg of msgs; let i = index'>
+          <span class="fntc">{{msg.source}}</span>
+          <span>&nbsp;:&nbsp;</span>
+          <span>{{msg.message}}</span>
+        </div>
+        <button (click)="vii.messages$.next([])"><label>X</label></button>
+      </div>
+    </div>
+    <div class="flx1"></div>
+  </div>
+</ng-container> -->
+
+<vii-route>
+  <router-outlet></router-outlet>
+</vii-route>
+
+<footer *ngIf="!cookies.allow">
+  <div class="fltr">
+    <a (click)="cookies.consent()">Click here</a> to agree!
+  </div>
+  <div>By using this site, you agree to the usage of cookies</div>
+</footer>

@@ -1,0 +1,17 @@
+<article>
+  <article-header>Cards</article-header>
+  <article-body>
+    <ng-container *ngFor="let card of glob.cards">
+      <span *ngIf="account.cards[card.id] then showOwned; else showBasic">
+      </span>
+      <ng-template #showOwned>
+        <vii-card [card]="card">
+          <div style="padding:7px">x{{account.cards[card.id]}}</div>
+        </vii-card>
+      </ng-template>
+      <ng-template #showBasic>
+        <vii-card [card]="card"></vii-card>
+      </ng-template>
+    </ng-container>
+  </article-body>
+</article>

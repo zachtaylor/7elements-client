@@ -1,0 +1,93 @@
+@import "var.less";
+form {
+	display:table;
+	width:100%;
+	padding:var(--pad);
+	font-size:var(--font2);
+}
+.form-row {
+	display:table-row;
+
+	> label, > input {
+		display:table-cell;
+		padding:calc(var(--pad) /2);
+	}
+	> input {
+		width:100%;
+		margin-bottom:var(--pad);
+		font-size:var(--font2);
+	}
+	> label:first-child {
+		text-align:right;
+	}
+}
+.form-row:last-child > input {
+	margin-bottom:0px;
+}
+input {
+	border: none;
+	border-radius:7px;
+  outline: none;
+  transition:@form-transition;
+}
+input.ng-valid {
+  box-shadow: 0 0 0 2px @darkgreen;
+}
+input.ng-pending {
+	box-shadow: 0 0 0 2px @darkyellow;
+}
+input.ng-invalid {
+  box-shadow: 0 0 0 2px @darkred;
+}
+input, input.ng-pristine {
+	box-shadow: 0 0 0 2px @darkwhite;
+}
+input:focus {
+	box-shadow: 0 0 0 3px @darkwhite;
+}
+input[required].ng-valid:focus {
+  box-shadow: 0 0 0 3px @darkgreen;
+}
+input[required].ng-pending:focus {
+  box-shadow: 0 0 0 3px @darkyellow;
+}
+input[required].ng-invalid:focus {
+  box-shadow: 0 0 0 3px @darkred;
+}
+button {
+	border-width:2px;
+	border-radius:21px;
+	border-style:solid;
+	animation:rainbowbox 7s infinite;
+	background:linear-gradient(to bottom, white, @britewhite);
+	box-shadow: 0px 0px 2px black;
+
+	img, label {
+		cursor:pointer;
+	}
+	img {
+		margin-top:-2px;
+		padding:2px;
+	}
+	label {
+		font-family:'Macondo';
+		font-weight:400;
+		font-size:var(--font2);
+		padding:0 var(--pad);
+	}
+}
+button:active {
+	background:white;
+	box-shadow:none;
+}
+button[disabled] {
+	animation:none;
+	background:@darkwhite;
+	border-color:black;
+	box-shadow:none;
+	color:@britewhite;
+
+	img, label {
+		cursor:not-allowed;
+	}
+}

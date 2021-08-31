@@ -1,0 +1,49 @@
+@import "../../styles/fonts.less";
+
+nav {
+  height:var(--ui);
+  width:100%;
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  font-size:var(--font1);
+  background:linear-gradient(to bottom, #000, #333);
+  box-shadow:0px 2px 7px black;
+
+  a {
+    color:white;
+    font-family:@font-plain;
+  }
+  a:hover {
+    animation:inherit;
+  }
+}
+.nav-item {
+  height:var(--ui);
+  padding:0 var(--pad);
+  display:flex;
+  transition:box-shadow 0.25s linear;
+
+  a {
+    align-self:flex-end;
+  }
+  a:hover {
+    border-color:black;
+  }
+
+  span {
+    align-self:flex-end;
+  }
+}
+.nav-item:first-child {
+  padding:0px;
+}
+.nav-item:hover {
+    box-shadow:inset 0px 12px 7px -7px white;
+}
+.nav-item.hilited {
+  box-shadow:inset 0px 11px 7px -7px yellow;
+}
+.nav-item.hilited:hover {
+  box-shadow:inset 0px 10px 7px -7px #77ff77;
+}

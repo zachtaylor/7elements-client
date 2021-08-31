@@ -1,0 +1,42 @@
+html {
+	--ui:32px;
+  --pad:4px;
+  --font0:16px;
+  --font1:24px;
+  --font2:20px;
+  --font3:12px;
+  font-size:var(--font0);
+}
+// [adaptive] {
+//   height:var(--ui);
+// }
+[adapt~="0"] {
+  height:var(--ui);
+}
+[adapt~="1"] {
+  height:calc(var(--ui) * 3 / 4);
+}
+[adapt~="2"] {
+  height:calc(var(--ui) / 2);
+}
+[adapt~="pad"] {
+  padding:var(--pad);
+}
+.padw {
+  padding:0px, var(--pad);
+}
+.fnt0 {
+  font-size:var(--font0);
+}
+h1, .fnt1 {
+  font-size:var(--font1);
+}
+h2, .fnt2 {
+  font-size:var(--font2);
+}
+h3, .fnt3, .form-detail {
+  font-size:var(--font3);
+}
+li {
+	margin-left:var(--pad);
+}

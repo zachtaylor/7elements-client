@@ -1,0 +1,54 @@
+<ng-container *ngIf="{ 
+  deck: runtime.deck$ | async
+} as state">
+  <article *ngIf="account.username">
+    <article-header>Your Deck</article-header>
+    <article-body>
+      <table class="w100">
+        <tr>
+          <td>
+            <div>This is your Active Deck</div>
+            <br/><br/>
+            <div>Scroll down to <img adapt="2" src="/img/icon/hand.svg">Select a different one</div>
+          </td>
+          <td class="talr">
+            <ng-container *ngIf="state.deck.user=='vii'">
+              <vii-deckbox [deck]="glob.decks[state.deck.id]"></vii-deckbox>
+            </ng-container>
+            <ng-container *ngIf="state.deck.user==account.username">
+              <vii-deckbox [deck]="account.decks[state.deck.id]"></vii-deckbox>
+            </ng-container>
+          </td>
+        </tr>
+      </table>
+    </article-body>
+    <article-footer>
+      <a routerLink="/play">Click here</a> to start a new Game
+    </article-footer>
+  </article>
+  <br *ngIf="account.username" />
+  <article *ngIf="account.username">
+    <article-header>Your Decks</article-header>
+    <article-body>
+      <vii-deckbox *ngFor="let deck of account?.decks | mapValues" [deck]="deck">
+        <a routerLink="/decks/edit/{{deck.id}}" class="fltr">Edit</a>
+        <!-- <img adapt="2" *ngIf="state.deck.user==account.username&&state.deck.id==deck.id" src="/img/icon/star.svg"> -->
+        <button [disabled]="state.deck.user==account.username&&state.deck.id==deck.id" (click)="runtime.setDeck(account.username, deck.id)">
+          <img adapt="2" src="/img/icon/star.svg">
+        </button>
+      </vii-deckbox>
+    </article-body>
+  </article>
+  <br *ngIf="account.username" />
+  <article>
+    <article-header>Free-to-Play Decks</article-header>
+    <article-body>
+      <vii-deckbox *ngFor="let deck of glob?.decks | mapValues" [deck]="deck">
+        <a class="fltr" routerLink="/decks/view/{{deck.id}}">View</a>
+        <button [disabled]="state.deck.user=='vii'&&state.deck.id==deck.id" (click)="runtime.setDeck('vii', deck.id)">
+          <img adapt="2" src="/img/icon/hand.svg">
+        </button>
+      </vii-deckbox>
+    </article-body>
+  </article>
+</ng-container>

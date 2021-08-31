@@ -1,0 +1,44 @@
+<article>
+  <article-header>Kitchen Sink</article-header>
+  <article-body>
+    <div>article with header, body, and footer</div>
+  </article-body>
+  <article-footer>footsie!</article-footer>
+</article>
+<article>
+  <article-body>
+    <div>NO header and NO footer</div>
+    <div class="fnt1">fnt1</div>
+    <div class="fnt2">fnt2</div>
+    <div class="fnt3">fnt3</div>
+  </article-body>
+</article>
+<article>
+  <article-header>Forms</article-header>
+  <article-body>
+    <form [formGroup]="form">
+      <div class="form-row">
+        <label>toggle</label>
+        <toggle></toggle>
+      </div>
+      <div class="form-row">
+        <label>optional input</label>
+        <input type="text" id="username1" formControlName="username1" placeholder="username">
+      </div>
+      <div class="form-row">
+        <label>required input</label>
+        <input type="text" required id="username2" formControlName="username2" placeholder="username">
+      </div>
+    </form>
+  </article-body>
+  <article-footer>
+    <button><label>active</label></button>
+    <button disabled><label>disabled</label></button>
+  </article-footer>
+</article>
+<article>
+  <article-header>Element buttons</article-header>
+  <article-body>
+    <button *ngFor="let i of [1, 2, 3, 4, 5, 6, 7]" adapt="1"><img adapt="1" src="/img/icon/element-{{i}}.png"></button>
+  </article-body>
+</article>

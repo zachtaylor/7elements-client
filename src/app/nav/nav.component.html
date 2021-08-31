@@ -1,0 +1,21 @@
+<nav>
+  <a class="nav-item" [class.hilited]="router.path=='/'" routerLink="/">
+    <img adapt="0" src="/img/banner-white.64px.png">
+  </a>
+  <a class="nav-item" [class.hilited]="router.path=='/cards'" routerLink="/cards">
+    <span>Cards</span>
+  </a>
+  <a class="nav-item" [class.hilited]="router.path=='/buy'" routerLink="/buy">
+    <span>Buy</span>
+  </a>
+  <a class="nav-item" [class.hilited]="router.path=='/decks'" routerLink="/decks">
+    <span>Decks</span>
+  </a>
+  <a class="nav-item" [class.hilited]="router.path=='/play'" routerLink="/play">
+    <span>Play</span>
+  </a>
+  <span class="flx1"></span> <!-- spacer -->
+  <a class="nav-item" [class.hilited]="router.path=='/account'" routerLink="/account" fragment="{{account.username?'':'login'}}">
+    <span>{{getAccountLinkName()}}</span>
+  </a>
+</nav>

@@ -1,0 +1,52 @@
+@import "../../styles/var.less";
+
+@animation-speed:0.5s ease-out;
+
+:host {
+  padding:var(--pad);
+  margin:0px var(--pad);
+}
+.page {
+  padding:var(--pad);
+  background-color:@front;
+  border-radius:7px;
+  border:1px solid black;
+  // transition: @animation-speed;
+}
+.header, .body, .footer {
+  transition: @animation-speed;
+}
+.header {
+  cursor:pointer;
+  padding-bottom:calc(var(--pad) / 2);
+  border-bottom-width: 2px;
+  border-bottom-style:solid;
+  // margin-bottom:var(--pad);
+  animation:rainbowbox 7s infinite;
+}
+.body {
+  height:auto;
+  overflow:hidden;
+  padding:1px 0;
+  margin:var(--pad) 0;
+}
+.footer {
+  text-align:right;
+  padding-top:calc(var(--pad) / 2);
+  border-top-style:solid;
+  border-top-width:1px;
+  border-color:#777;
+  // margin-top:var(--pad);
+}
+.header, .footer {
+  line-height:1.7;
+}
+:host.collapse {
+  .header, .body, .footer {
+    padding:0;
+    margin:0;
+  }
+  .footer {
+    border-width:0;
+  }
+}

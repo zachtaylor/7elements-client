@@ -1,0 +1,56 @@
+@import "var.less";
+
+@keyframes rainbowbox {
+	0%, 100% {
+		border-color:@darkwhite;
+	}
+	10% {
+		border-color:@darkblack;
+	}
+	25% {
+		border-color:@darkviolet;
+	}
+	40% {
+		border-color:@darkyellow;
+	}
+	55% {
+		border-color:@darkred;
+	}
+	70% {
+		border-color:@darkgreen;
+	}
+	85% {
+		border-color:@darkblue;
+	}
+}
+
+@keyframes rainbowtext {
+	0%, 100% {
+		color:@briteblack;
+	}
+	10% {
+		color:@briteblue;
+	}
+	25% {
+		color:@briteyellow;
+	}
+	40% {
+		color:@briteviolet;
+	}
+	55% {
+		color:@britegreen;
+	}
+	70% {
+		color:@britered;
+	}
+	85% {
+		color:@britewhite;
+	}
+}
+
+.anim-rainbowbox {
+	animation:rainbowbox 7s infinite;
+}
+.anim-rainbowtext {
+	animation:rainbowtext 7s infinite;
+}

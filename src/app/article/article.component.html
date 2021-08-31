@@ -1,0 +1,14 @@
+<div class="page">
+  <div class="header fnt1 flxr" (click)="clickHeader()" [hidden]="!header.innerHTML.trim()">
+    <b [hidden]="!collapse" class="fntb anim-rainbowtext">&nbsp;+&nbsp;</b>
+    <span class="flx1" #header>
+      <ng-content select="article-header"></ng-content>
+    </span>
+  </div>
+  <div class="body" #body>
+    <ng-content select="article-body"></ng-content>
+  </div>
+  <div class="footer fnt2" #footer [hidden]="!footer.innerHTML.trim()">
+    <ng-content select="article-footer"></ng-content>
+  </div>
+</div>

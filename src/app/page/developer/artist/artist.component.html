@@ -1,0 +1,18 @@
+<article >
+  <article-header>Artist credits</article-header>
+  <article-body>
+    This page contains artwork credits and external links for contributing artists
+  </article-body>
+</article>
+<ng-container *ngFor="let artist of artists">
+  <br />
+  <article [collapse]="true">
+    <article-header>{{artist.name}}</article-header>
+    <article-body>
+      <carousel>
+        <vii-card *ngFor="let id of artist.art" [card]="glob.cards[id-1]"></vii-card>
+      </carousel>
+    </article-body>
+    <article-footer><a href="{{artist.link}}"></a></article-footer>
+  </article>
+</ng-container>

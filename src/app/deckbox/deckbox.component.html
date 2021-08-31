@@ -1,0 +1,12 @@
+<ng-container *ngIf="deck">
+  <div adapt="1" class="title talc w100 ">
+    <span adapt="2" class="fltr fnt2">({{deck.size}})</span>
+    <i *ngIf="!deck.name" class="fnt2">[no name]</i>
+    <span *ngIf="deck.name" class="fnt1">{{deck.name}}</span>
+  </div>
+  <div class="talc w100">
+    <img class="posa" src="/img/deck-cover{{isActive?'-active':''}}.png">
+    <img class="deck-cover" src="/img/card/{{deck.cover}}.jpg">
+  </div>
+  <ng-content></ng-content>
+</ng-container>
