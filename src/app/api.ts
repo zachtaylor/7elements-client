@@ -208,19 +208,15 @@ export class DeckSetting {
 }
 
 export class QueueSetting {
-  id: number
-  owner: string
   pvp: boolean
   custom: boolean
   hands: string
   speed: string
-  constructor() {
-    this.id = 1
-    this.owner = 'vii'
-    this.pvp = false
-    this.custom = false
-    this.hands = 'small'
-    this.speed = 'slow'
+  constructor(pvp = false, custom = false, hands = 'med', speed = 'slow') {
+    this.pvp = pvp
+    this.custom = custom
+    this.hands = hands
+    this.speed = speed
   }
 }
 
