@@ -8,51 +8,58 @@ form {
 .form-row {
 	display:table-row;
 
-	> label, > input {
+	> label, >input[type="text"], >input[type="email"], >input[type="password"] {
 		display:table-cell;
 		padding:calc(var(--pad) /2);
-	}
-	> input {
-		width:100%;
-		margin-bottom:var(--pad);
-		font-size:var(--font2);
 	}
 	> label:first-child {
 		text-align:right;
 	}
+	> input[type="text"], >input[type="email"], >input[type="password"] {
+		width:100%;
+		margin-bottom:var(--pad);
+		font-size:var(--font2);
+	}
+
+	&:last-child {
+		>input[type="text"], >input[type="email"], >input[type="password"] {
+			margin-bottom:0px;
+		}
+	}
 }
-.form-row:last-child > input {
-	margin-bottom:0px;
-}
-input {
+input[type="text"], input[type="email"], input[type="password"] {
 	border: none;
 	border-radius:7px;
-  outline: none;
-  transition:@form-transition;
-}
-input.ng-valid {
-  box-shadow: 0 0 0 2px @darkgreen;
-}
-input.ng-pending {
-	box-shadow: 0 0 0 2px @darkyellow;
-}
-input.ng-invalid {
-  box-shadow: 0 0 0 2px @darkred;
-}
-input, input.ng-pristine {
-	box-shadow: 0 0 0 2px @darkwhite;
-}
-input:focus {
-	box-shadow: 0 0 0 3px @darkwhite;
-}
-input[required].ng-valid:focus {
-  box-shadow: 0 0 0 3px @darkgreen;
-}
-input[required].ng-pending:focus {
-  box-shadow: 0 0 0 3px @darkyellow;
-}
-input[required].ng-invalid:focus {
-  box-shadow: 0 0 0 3px @darkred;
+	outline: none;
+	transition:@form-transition;
+
+	&.ng-valid {
+		box-shadow: 0 0 0 2px @darkgreen;
+	}
+	&.ng-pending {
+		box-shadow: 0 0 0 2px @darkyellow;
+	}
+	&.ng-invalid {
+		box-shadow: 0 0 0 2px @darkred;
+	}
+	&.ng-pristine {
+		box-shadow: 0 0 0 2px @darkwhite;
+	}
+	&:focus {
+		box-shadow: 0 0 0 3px @darkwhite;
+	}
+	&[required] {
+
+		&.ng-valid:focus {
+			box-shadow: 0 0 0 3px @darkgreen;
+		}
+		&.ng-pending:focus {
+			box-shadow: 0 0 0 3px @darkyellow;
+		}
+		&.ng-invalid:focus {
+			box-shadow: 0 0 0 3px @darkred;
+		}
+	}
 }
 button {
 	border-width:2px;
