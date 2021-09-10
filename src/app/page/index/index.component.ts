@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { AccountService } from 'src/app/account.service'
-import { GlobalService } from 'src/app/global.service'
+import { DataService } from 'src/app/data.service'
 import { RuntimeService } from 'src/app/runtime.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
@@ -13,9 +12,8 @@ export class IndexComponent {
 
   constructor(
     public runtime : RuntimeService,
-    public glob : GlobalService,
-    public account : AccountService,
-    public ws : WebsocketService
+    public data : DataService,
+    private ws : WebsocketService
   ) { }
 
   changeQueuePVP($event : boolean) {

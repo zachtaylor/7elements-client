@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { AccountService } from 'src/app/account.service';
-import { GlobalService } from 'src/app/global.service';
-import { RuntimeService } from 'src/app/runtime.service';
+import { Component } from '@angular/core'
+import { DataService } from 'src/app/data.service'
+import { RuntimeService } from 'src/app/runtime.service'
 
 @Component({
   selector: 'vii-decks',
@@ -11,9 +10,8 @@ import { RuntimeService } from 'src/app/runtime.service';
 export class DecksComponent  {
 
   constructor(
-    public glob: GlobalService,
-    public account: AccountService,
-    public runtime: RuntimeService
+    public runtime : RuntimeService,
+    public data : DataService,
   ) { }
 
 }

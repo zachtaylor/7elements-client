@@ -65,97 +65,99 @@
   </article-body>
 </article>
 <br/>
-<article *ngIf="glob.cards">
-  <article-header>Being Cards</article-header>
-  <article-body>
-    <vii-card class="fltr" [card]="glob.cards[2]"></vii-card>
-    <span>
+<ng-container *ngIf="data.global$ | async as glob">
+  <article *ngIf="glob.cards">
+    <article-header>Being Cards</article-header>
+    <article-body>
+      <vii-card class="fltr" [card]="glob.cards[2]"></vii-card>
+      <span>
+        <br/>
+        These Cards add Being Tokens to your Present, the Card is placed into your Past
+        <br/><br/>
+        Being Tokens have as much <img adapt="1" src="/img/icon/attack.32px.png"> Attack and <img adapt="1" src="/img/icon/life.32px.png"> Life as is printed on the Card
+        <br /><br/>
+        <span class="fntb">Zealot</span> requires 1 <img adapt="1" src="/img/icon/element-3.png"> Yellow Element to Play
+      </span>
+      <div class="clrf"></div>
       <br/>
-      These Cards add Being Tokens to your Present, the Card is placed into your Past
-      <br/><br/>
-      Being Tokens have as much <img adapt="1" src="/img/icon/attack.32px.png"> Attack and <img adapt="1" src="/img/icon/life.32px.png"> Life as is printed on the Card
-      <br /><br/>
-      <span class="fntb">Zealot</span> requires 1 <img adapt="1" src="/img/icon/element-3.png"> Yellow Element to Play
-    </span>
-    <div class="clrf"></div>
-    <br/>
-    <vii-card class="fltl" [card]="glob.cards[6]"></vii-card>
-    <span class="talr w100">
+      <vii-card class="fltl" [card]="glob.cards[6]"></vii-card>
+      <span class="talr w100">
+        <br/>
+        Being Tokens can do more than just attack, though, <span class="fntb">Nightmare Ader</span> can use its Power to deal Damage!
+        <br/><br/>
+        This Power requires 1 <img adapt="1" src="/img/icon/element-7.png"> Black Element to Trigger, as well as <img adapt="1" src="/img/icon/timer.png"> Using the Token, (must be <img adapt="1" src="/img/icon/awake.svg"> Awake, becomes <img adapt="1" src="/img/icon/asleep.svg"> Asleep)
+      </span>
+      <div class="clrf"></div>
       <br/>
-      Being Tokens can do more than just attack, though, <span class="fntb">Nightmare Ader</span> can use its Power to deal Damage!
-      <br/><br/>
-      This Power requires 1 <img adapt="1" src="/img/icon/element-7.png"> Black Element to Trigger, as well as <img adapt="1" src="/img/icon/timer.png"> Using the Token, (must be <img adapt="1" src="/img/icon/awake.svg"> Awake, becomes <img adapt="1" src="/img/icon/asleep.svg"> Asleep)
-    </span>
-    <div class="clrf"></div>
-    <br/>
-    <vii-card class="fltr" [card]="glob.cards[1]"></vii-card>
-    <span>
-      <br/><br/><br/>
-      <span class="fntb">Ifrit</span> has a Power which doesn't require Elements or Use, but can be Triggered at any time by <img adapt="1" src="/img/icon/trash.svg"> Destroying it
-    </span>
-    <div class="clrf"></div>
-    <br/>
-    <vii-card class="fltl" [card]="glob.cards[5]"></vii-card>
-    <span class="talr">
+      <vii-card class="fltr" [card]="glob.cards[1]"></vii-card>
+      <span>
+        <br/><br/><br/>
+        <span class="fntb">Ifrit</span> has a Power which doesn't require Elements or Use, but can be Triggered at any time by <img adapt="1" src="/img/icon/trash.svg"> Destroying it
+      </span>
+      <div class="clrf"></div>
       <br/>
-      A unique Power <span class="fntb">Pixie</span> has can be Triggered at any time (<span class="fntb">spell</span>)
-      <br/><br/>
-      The Token must survive any potential Spells or Triggers before the Life value is calculated, so it is not exactly a <img adapt="1" src="/img/icon/trash.svg"> Destroy Trigger
-    </span>
-    <div class="clrf"></div>
-  </article-body>
-</article>
-<br/>
-<article *ngIf="glob.cards">
-  <article-header>Spell Cards</article-header>
-  <article-body>
-    <vii-card class="fltr" [card]="glob.cards[12]"></vii-card>
-    <span>
-      <br />
-      These cards have effects that take place immediately, and are put into the Past when their effect is complete
-      <br/><br/>
-      This Spell requires a <img adapt="1" src="/img/icon/element-6.png"> Violet Element to play
-      <br/><br/>
-      It can be used to prevent a Being Token from losing all of its Life
-    </span>
-    <div class="clrf"></div>
-    <br/>
-    <vii-card class="fltl" [card]="glob.cards[8]"></vii-card>
-    <span class="talr">
+      <vii-card class="fltl" [card]="glob.cards[5]"></vii-card>
+      <span class="talr">
+        <br/>
+        A unique Power <span class="fntb">Pixie</span> has can be Triggered at any time (<span class="fntb">spell</span>)
+        <br/><br/>
+        The Token must survive any potential Spells or Triggers before the Life value is calculated, so it is not exactly a <img adapt="1" src="/img/icon/trash.svg"> Destroy Trigger
+      </span>
+      <div class="clrf"></div>
+    </article-body>
+  </article>
+  <br/>
+  <article *ngIf="glob.cards">
+    <article-header>Spell Cards</article-header>
+    <article-body>
+      <vii-card class="fltr" [card]="glob.cards[12]"></vii-card>
+      <span>
+        <br />
+        These cards have effects that take place immediately, and are put into the Past when their effect is complete
+        <br/><br/>
+        This Spell requires a <img adapt="1" src="/img/icon/element-6.png"> Violet Element to play
+        <br/><br/>
+        It can be used to prevent a Being Token from losing all of its Life
+      </span>
+      <div class="clrf"></div>
       <br/>
-      This Spell requires a red Element to play
-      <br /><br />
-      It can be used reduce the Life of a Being Token
-    </span>
-    <div class="clrf"></div>
-  </article-body>
-</article>
-<br/>
-<article *ngIf="glob.cards">
-  <article-header>Item Cards</article-header>
-  <article-body>
-    These Cards add Items Tokens to the Present, and the Card is added to your Past
-    <br/><br/>
-    Item Tokens in the Present may be Awake or Asleep, and must be Awake to be used
-    <br/><br/>
-    Item Tokens are Asleep when they enter the Present
-    <div class="clrf">
-      <br />
-    </div>
-    <vii-card class="fltl" [card]="glob.cards[17]"></vii-card>
-    <br/>
-    This Item requires a green Element to play
-    <br/><br/>
-    It has a Power that is Triggered at Sunrise ( on the start of every turn ) notated by <img adapt="1" src="/img/icon/sunrise.svg">
-    <br/>
-    <div class="clrf"></div>
-    <vii-card class="fltr" [card]="glob.cards[18]"></vii-card>
-    <br/>
-    This Item requires 2 blue Elements to play
-    <br/><br/>
-    It has an activatable ability that can be used to change your Future, notated by <img adapt="1" src="/img/icon/timer.png">
-    <br/>
-    <div class="clrf"></div>
-  </article-body>
-</article>
-<br/>
+      <vii-card class="fltl" [card]="glob.cards[8]"></vii-card>
+      <span class="talr">
+        <br/>
+        This Spell requires a red Element to play
+        <br /><br />
+        It can be used reduce the Life of a Being Token
+      </span>
+      <div class="clrf"></div>
+    </article-body>
+  </article>
+  <br/>
+  <article *ngIf="glob.cards">
+    <article-header>Item Cards</article-header>
+    <article-body>
+      These Cards add Items Tokens to the Present, and the Card is added to your Past
+      <br/><br/>
+      Item Tokens in the Present may be Awake or Asleep, and must be Awake to be used
+      <br/><br/>
+      Item Tokens are Asleep when they enter the Present
+      <div class="clrf">
+        <br />
+      </div>
+      <vii-card class="fltl" [card]="glob.cards[17]"></vii-card>
+      <br/>
+      This Item requires a green Element to play
+      <br/><br/>
+      It has a Power that is Triggered at Sunrise ( on the start of every turn ) notated by <img adapt="1" src="/img/icon/sunrise.svg">
+      <br/>
+      <div class="clrf"></div>
+      <vii-card class="fltr" [card]="glob.cards[18]"></vii-card>
+      <br/>
+      This Item requires 2 blue Elements to play
+      <br/><br/>
+      It has an activatable ability that can be used to change your Future, notated by <img adapt="1" src="/img/icon/timer.png">
+      <br/>
+      <div class="clrf"></div>
+    </article-body>
+  </article>
+  <br/>
+</ng-container>

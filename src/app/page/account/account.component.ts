@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { AccountService } from 'src/app/account.service'
+import { DataService } from 'src/app/data.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
 @Component({
@@ -23,7 +23,7 @@ export class AccountComponent implements OnInit {
 
   constructor(
     public route : ActivatedRoute,
-    public account : AccountService,
+    public data : DataService,
     private ws : WebsocketService,
   ) { }
 
@@ -44,7 +44,7 @@ export class AccountComponent implements OnInit {
   clickLogout() {
     this.ws.send('/logout', {})
   }
-  
+
   submitChangeEmail() {
     let inputEmail = this.changeEmail.get('email')
     let newEmail = inputEmail.value

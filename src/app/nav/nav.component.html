@@ -15,7 +15,10 @@
     <span>Play</span>
   </a>
   <span class="flx1"></span> <!-- spacer -->
-  <a class="nav-item" [class.hilited]="router.path=='/account'" routerLink="/account" fragment="{{account.username?'':'login'}}">
-    <span>{{getAccountLinkName()}}</span>
-  </a>
+  <ng-container *ngIf="data.account$ | async as account">
+    <a class="nav-item" [class.hilited]="router.path=='/account'" routerLink="/account" fragment="{{account.username?'':'login'}}">
+      <span *ngIf="account.username">{{account.username}}</span>
+      <span *ngIf="!account.username">My Account</span>
+    </a>
+  </ng-container>
 </nav>

@@ -11,78 +11,83 @@
       <br/>
       <div>7 New Cards, PvP mode, improved Deck editor, and more! <a routerLink="/updates">Click here</a> for update history<br/></div>
       <br/>
-      <ng-container *ngIf="ws.ping$ | async as ping">
+      <ng-container *ngIf="data.ping$ | async as ping">
         <span>{{ping.ping}} connected / {{ping.online}} logged in / {{ping.users}} users</span>
       </ng-container>
       <br/>
     </article-body>
   </article>
-  <article *ngIf="!account.username">
-    <article-header>No Account</article-header>
-    <article-body>
-      You are logged out
-    </article-body>
-    <article-footer>
-      Sign up for free today! <a routerLink="/account" fragment="signup">Click here</a>
-    </article-footer>
-  </article>
+  <ng-container *ngIf="data.account$ | async as account">
+    <article *ngIf="!account.username">
+      <article-header>No Account</article-header>
+      <article-body>
+        You are logged out
+      </article-body>
+      <article-footer>
+        Sign up for free today! <a routerLink="/account" fragment="signup">Click here</a>
+      </article-footer>
+    </article>
+  </ng-container>
 </div>
-<div class="dinl flx1" [hidden]="!account.username" *ngIf="{ 
-  deck: runtime.deck$ | async,
-  queue: runtime.queue$ | async
-} as state">
-  <article>
-    <article-header>New Game</article-header>
-    <article-body>
-      <div class="talc">
-        <ng-container *ngIf="state.deck.user=='vii'">
-          <vii-deckbox [deck]="glob.decks[state.deck.id]"></vii-deckbox>
-        </ng-container>
-        <ng-container *ngIf="state.deck.user==account.username">
-          <vii-deckbox [deck]="account.decks[state.deck.id]"></vii-deckbox>
-        </ng-container>
-      </div>
-      <form>
-        <form-detail>
-          <span>Wait: {{state.queue.pvp ? '?' : 'none'}}</span>
-        </form-detail>
-        <div class="form-row">
-          <label>VS Human</label>
-          <td class="talc">
-            <toggle [check]="state.queue.pvp" (checkChange)="changeQueuePVP($event)"></toggle>
-          </td>
+<ng-container *ngIf="data.account$ | async as account">
+  <div class="dinl flx1" [hidden]="!account.username" *ngIf="{
+    glob: data.global$ | async,
+    deck: runtime.deck$ | async,
+    queue: runtime.queue$ | async
+  } as state">
+    <article>
+      <article-header>New Game</article-header>
+      <article-body>
+        <div class="talc">
+          <ng-container *ngIf="state.deck.user=='vii'">
+            <vii-deckbox [deck]="state.glob.decks[state.deck.id]"></vii-deckbox>
+          </ng-container>
+          <ng-container *ngIf="state.deck.user==account.username">
+            <vii-deckbox [deck]="account.decks[state.deck.id]"></vii-deckbox>
+          </ng-container>
         </div>
-        <form-detail *ngIf="state.queue.pvp&&state.deck.user!=='vii'">Required</form-detail>
-        <div class="form-row" [hidden]="!state.queue.pvp">
-          <label>VS Custom</label>
-          <td class="talc">
-            <toggle #toggleCustom [check]="state.queue.custom" (checkChange)="changeQueueCustom(toggleCustom, $event)"></toggle>
-          </td>
-        </div>
-        <div class="form-row">
-          <label>Hand Size</label>
-          <td style="min-width:100px">
-            <ng-container *ngFor="let hands of ['small', 'med', 'large']">
-              <input type="radio" [value]="hands" name="hands" [checked]="state.queue.hands==hands" (change)="changeQueueHands(hands)">{{hands}}
-              <br/>
-            </ng-container>
-          </td>
-        </div>
-        <div class="form-row">
-          <label>Timeout</label>
-          <td style="min-width:100px">
-            <ng-container *ngFor="let speed of ['fast', 'med', 'slow']">
-              <input type="radio" [value]="speed" name="speed" [checked]="state.queue.speed==speed" (change)="changeQueueSpeed(speed)">{{speed}}
-              <br/>
-            </ng-container>
-          </td>
-        </div>
-      </form>
-    </article-body>
-    <article-footer>
-      <button (click)="submitNewGame()">
-        <label>PLAY</label>
-      </button>
-    </article-footer>
-  </article>
-</div>
+        <form>
+          <form-detail>
+            <span>Wait: {{state.queue.pvp ? '?' : 'none'}}</span>
+          </form-detail>
+          <div class="form-row">
+            <label>VS Human</label>
+            <td class="talc">
+              <toggle [check]="state.queue.pvp" (checkChange)="changeQueuePVP($event)"></toggle>
+            </td>
+          </div>
+          <form-detail *ngIf="state.queue.pvp&&state.deck.user!=='vii'">Required</form-detail>
+          <div class="form-row" [hidden]="!state.queue.pvp">
+            <label>VS Custom</label>
+            <td class="talc">
+              <toggle #toggleCustom [check]="state.queue.custom" (checkChange)="changeQueueCustom(toggleCustom, $event)"></toggle>
+            </td>
+          </div>
+          <div class="form-row">
+            <label>Hand Size</label>
+            <td style="min-width:100px">
+              <ng-container *ngFor="let hands of ['small', 'med', 'large']">
+                <input type="radio" [value]="hands" name="hands" [checked]="state.queue.hands==hands" (change)="changeQueueHands(hands)">{{hands}}
+                <br/>
+              </ng-container>
+            </td>
+          </div>
+          <div class="form-row">
+            <label>Timeout</label>
+            <td style="min-width:100px">
+              <ng-container *ngFor="let speed of ['fast', 'med', 'slow']">
+                <input type="radio" [value]="speed" name="speed" [checked]="state.queue.speed==speed" (change)="changeQueueSpeed(speed)">{{speed}}
+                <br/>
+              </ng-container>
+            </td>
+          </div>
+        </form>
+      </article-body>
+      <article-footer>
+        <button (click)="submitNewGame()">
+          <label>PLAY</label>
+        </button>
+      </article-footer>
+    </article>
+  </div>
+</ng-container>

@@ -1,4 +1,4 @@
-<ng-container *ngIf="!account.username">
+<ng-container *ngIf="data.account$ | async as account">
   <article *ngIf="!account.username" class="flx1">
     <article-header>No Account</article-header>
     <article-body>
@@ -6,69 +6,71 @@
     </article-body>
     <article-footer>
       <a routerLink="/account" fragment="login">Click here</a>
-      <span>  to log in</span>
+      <span> to log in</span>
     </article-footer>
   </article>
-</ng-container>
-<ng-container *ngIf="account.username">
-  <div class="dinl h100 flx1 panel">
-    <article>
-      <article-header>Card Collection</article-header>
-      <article-body>
-        <vii-card *ngFor="let cardid of account.cards | mapKeys" [card]="glob.cards[+cardid-1]">
-          <div style="padding:7px">x{{account.cards[cardid]}}</div>
-          <div>
-            <button adapt="1" (click)="clickUp(+cardid)">&nbsp;<label>+</label>&nbsp;</button>
-          </div>
-          <div>
-            <button adapt="1" (click)="clickDown(+cardid)">&nbsp;<label>-</label>&nbsp;</button>
-          </div>
-        </vii-card>
-      </article-body>
-    </article>
-  </div>
-  <div class="dinl h100 panel right">
-    <img class="w100" src="/img/card/{{coverImage}}.jpg">
-    <div class="talc" *ngIf="coverImage===0">
-      <i>cover art missing</i>
-    </div>
-    <div class="w100 talc fnt2">
-      <b *ngIf="account.decks[id].name">{{account.decks[id].name}}</b>
-      <i *ngIf="!account.decks[id].name">[no name]</i>
-    </div>
-    <form [formGroup]="form">
-      <div class="form-row">
-        <input type="text" class="talc" formControlName="name" placeholder="[no name]">
+  <ng-container *ngIf="account.username">
+    <ng-container *ngIf="data.global$ | async as glob">
+      <div class="dinl h100 flx1 panel">
+        <article>
+          <article-header>Card Collection</article-header>
+          <article-body>
+            <vii-card *ngFor="let cardid of account.cards | mapKeys" [card]="glob.cards[+cardid-1]">
+              <div style="padding:7px">x{{account.cards[cardid]}}</div>
+              <div>
+                <button adapt="1" (click)="clickUp(+cardid)">&nbsp;<label>+</label>&nbsp;</button>
+              </div>
+              <div>
+                <button adapt="1" (click)="clickDown(+cardid)">&nbsp;<label>-</label>&nbsp;</button>
+              </div>
+            </vii-card>
+          </article-body>
+        </article>
       </div>
-    </form>
-    <div class="talc">
-      <span>{{getCount()}}</span>
-    </div>
-    <div class="talc">
-      <button class="vii" [disabled]="!dirty" (click)="clickSave()">
-        <label>Save</label>
-      </button>
-    </div>
-    <div *ngFor="let cardid of getCards()">
-      <vii-card [card]="glob.cards[+cardid-1]">
-        <div class="flxr w250">
-          &nbsp;
-          <span class="flx1">
-            <span>x{{account.decks[id].cards[cardid]||0}}</span>
-            <span *ngIf="diffCardID(+cardid)>0">+{{diffCardID(+cardid)}}</span>
-            <span *ngIf="diffCardID(+cardid)<0">{{diffCardID(+cardid)}}</span>
-          </span>
-          <span class="talr">
-            <button adapt="1" (click)="clickCover(+cardid)" [disabled]="+cardid===coverImage">
-              &nbsp;<img adapt="2" src="/img/icon/star.svg">&nbsp;
-            </button>
-            &nbsp;
-            <button adapt="1" (click)="clickDown(+cardid)">&nbsp;<label>-</label>&nbsp;</button>
-            &nbsp;
-            <button adapt="1" (click)="clickUp(+cardid)">&nbsp;<label>+</label>&nbsp;</button>
-          </span>
+      <div class="dinl h100 panel right">
+        <img class="w100" src="/img/card/{{coverImage}}.jpg">
+        <div class="talc" *ngIf="coverImage===0">
+          <i>cover art missing</i>
         </div>
-      </vii-card>
-    </div>
-  </div>
+        <div class="w100 talc fnt2">
+          <b *ngIf="account.decks[id].name">{{account.decks[id].name}}</b>
+          <i *ngIf="!account.decks[id].name">[no name]</i>
+        </div>
+        <form [formGroup]="form">
+          <div class="form-row">
+            <input type="text" class="talc" formControlName="name" placeholder="[no name]">
+          </div>
+        </form>
+        <div class="talc">
+          <span>{{getCount()}}</span>
+        </div>
+        <div class="talc">
+          <button class="vii" [disabled]="!dirty" (click)="clickSave()">
+            <label>Save</label>
+          </button>
+        </div>
+        <div *ngFor="let cardid of getCards()">
+          <vii-card [card]="glob.cards[+cardid-1]">
+            <div class="flxr w250">
+              &nbsp;
+              <span class="flx1">
+                <span>x{{account.decks[id].cards[cardid]||0}}</span>
+                <span *ngIf="diffCardID(+cardid)>0">+{{diffCardID(+cardid)}}</span>
+                <span *ngIf="diffCardID(+cardid)<0">{{diffCardID(+cardid)}}</span>
+              </span>
+              <span class="talr">
+                <button adapt="1" (click)="clickCover(+cardid)" [disabled]="+cardid===coverImage">
+                  &nbsp;<img adapt="2" src="/img/icon/star.svg">&nbsp;
+                </button>
+                &nbsp;
+                <button adapt="1" (click)="clickDown(+cardid)">&nbsp;<label>-</label>&nbsp;</button>
+                &nbsp;
+                <button adapt="1" (click)="clickUp(+cardid)">&nbsp;<label>+</label>&nbsp;</button>
+              </span>
+            </div>
+          </vii-card>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
 </ng-container>

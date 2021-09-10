@@ -1,76 +1,78 @@
-<div *ngIf="account.username; then showAccount; else showNoAccount">
-</div>
-<!-- account -->
-<ng-template #showAccount>
-  <article>
-    <article-header>
-      <span>My Account</span>
-    </article-header>
-    <article-body class="fnt2">
-      <div>Coins: {{account.coins}}</div>
-      <br/>
-      <div>Cards: {{account.cards | mapCount}}</div>
-    </article-body>
-    <article-footer class="talc">
-      <button (click)="clickLogout()"><label>LOGOUT</label></button>
-    </article-footer>
-  </article>
-  <article [collapse]="true">
-    <article-header>Change Email Address</article-header>
-    <article-body>
-      <span class="fnt2">Registered: <b>{{account.email}}</b></span>
-      <br/>
-      <form [formGroup]="changeEmail" (ngSubmit)="submitChangeEmail()">
-        <div class="form-row">
-          <label>new email</label>
-          <input type="email" autocomplete="email" formControlName="email">
+<ng-container *ngIf="data.account$ | async as account">
+  <div *ngIf="account.username; then showAccount; else showNoAccount">
+  </div>
+  <!-- account -->
+  <ng-template #showAccount>
+    <article>
+      <article-header>
+        <span>My Account</span>
+      </article-header>
+      <article-body class="fnt2">
+        <div>Coins: {{account.coins}}</div>
+        <br/>
+        <div>Cards: {{account.cards | mapCount}}</div>
+      </article-body>
+      <article-footer class="talc">
+        <button (click)="clickLogout()"><label>LOGOUT</label></button>
+      </article-footer>
+    </article>
+    <article [collapse]="true">
+      <article-header>Change Email Address</article-header>
+      <article-body>
+        <span class="fnt2">Registered: <b>{{account.email}}</b></span>
+        <br/>
+        <form [formGroup]="changeEmail" (ngSubmit)="submitChangeEmail()">
+          <div class="form-row">
+            <label>new email</label>
+            <input type="email" autocomplete="email" formControlName="email">
+          </div>
+        </form>
+        <div class="w100 talr">
+          <button (click)="submitChangeEmail()">
+            <label>Update</label>
+          </button>
         </div>
-      </form>
-      <div class="w100 talr">
-        <button (click)="submitChangeEmail()">
-          <label>Update</label>
-        </button>
-      </div>
-    </article-body>
-  </article>
-  <article [collapse]="true">
-    <article-header>Change Password</article-header>
-    <article-body>
-      <form [formGroup]="changePassword" (ngSubmit)="submitChangePassword()">
-        <input hidden autocomplete="username">
-        <div class="form-row">
-          <label>new password</label>
-          <input type="password" autocomplete="new-password" formControlName="password1">
+      </article-body>
+    </article>
+    <article [collapse]="true">
+      <article-header>Change Password</article-header>
+      <article-body>
+        <form [formGroup]="changePassword" (ngSubmit)="submitChangePassword()">
+          <input hidden autocomplete="username">
+          <div class="form-row">
+            <label>new password</label>
+            <input type="password" autocomplete="new-password" formControlName="password1">
+          </div>
+          <div class="form-row">
+            <label>new password</label>
+            <input type="password" autocomplete="new-password" formControlName="password2">
+          </div>
+        </form>
+        <div class="w100 talr">
+          <button (click)="submitChangePassword()"><label>Update</label></button>
         </div>
-        <div class="form-row">
-          <label>new password</label>
-          <input type="password" autocomplete="new-password" formControlName="password2">
+      </article-body>
+    </article>
+  </ng-template>
+  <!-- login -->
+  <ng-template #showNoAccount>
+    <article *ngIf="showLost()">
+      <article-header>No Account</article-header>
+      <article-body>
+        <div>7 Elements is free to play</div>
+        <br/>
+        <div>
+          <span>Been here before? </span>
+          <a routerLink="/account" fragment="login">Click here</a>
+          <span> to Login</span>
         </div>
-      </form>
-      <div class="w100 talr">
-        <button (click)="submitChangePassword()"><label>Update</label></button>
-      </div>
-    </article-body>
-  </article>
-</ng-template>
-<!-- login -->
-<ng-template #showNoAccount>
-  <article *ngIf="showLost()">
-    <article-header>No Account</article-header>
-    <article-body>
-      <div>7 Elements is free to play</div>
-      <br/>
-      <div>
-        <span>Been here before? </span>
-        <a routerLink="/account" fragment="login">Click here</a>
-        <span> to Login</span>
-      </div>
-    </article-body>
-    <article-footer>
-      <a routerLink="/account" fragment="signup">Click here</a>
-      <span> to Signup</span>
-    </article-footer>
-  </article>
-  <vii-login *ngIf="showLogin()"></vii-login>
-  <vii-signup *ngIf="showSignup()"></vii-signup>
-</ng-template>
+      </article-body>
+      <article-footer>
+        <a routerLink="/account" fragment="signup">Click here</a>
+        <span> to Signup</span>
+      </article-footer>
+    </article>
+    <vii-login *ngIf="showLogin()"></vii-login>
+    <vii-signup *ngIf="showSignup()"></vii-signup>
+  </ng-template>
+</ng-container>

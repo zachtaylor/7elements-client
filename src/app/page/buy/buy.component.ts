@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
-import { AccountService } from 'src/app/account.service'
-import { GlobalService } from 'src/app/global.service'
+import { DataService } from 'src/app/data.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
 @Component({
@@ -10,7 +9,7 @@ import { WebsocketService } from 'src/app/websocket.service'
 })
 export class BuyComponent {
 
-  constructor(public glob : GlobalService, public account : AccountService, private ws : WebsocketService) { }
+  constructor(public data : DataService, private ws : WebsocketService) { }
 
   clickBuyPack(packid: number) {
     this.ws.send('/packs/buy', {

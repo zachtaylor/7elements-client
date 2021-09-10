@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { GlobalService } from 'src/app/global.service';
+import { Component, OnInit } from '@angular/core'
+import { DataService } from 'src/app/data.service'
 
 @Component({
   selector: 'vii-artist',
@@ -11,7 +11,7 @@ export class ArtistComponent implements OnInit {
   artists = []
 
   constructor(
-    public glob : GlobalService,
+    public data : DataService,
   ) { }
 
   private addArtist(name: string, art: number[], link: string) {

@@ -1,7 +1,9 @@
-<ng-container *ngIf="{ 
+<ng-container *ngIf="{
+  glob: data.global$ | async,
+  account: data.account$ | async,
   deck: runtime.deck$ | async
 } as state">
-  <article *ngIf="account.username">
+  <article *ngIf="state.account.username">
     <article-header>Your Deck</article-header>
     <article-body>
       <table class="w100">
@@ -13,10 +15,10 @@
           </td>
           <td class="talr">
             <ng-container *ngIf="state.deck.user=='vii'">
-              <vii-deckbox [deck]="glob.decks[state.deck.id]"></vii-deckbox>
+              <vii-deckbox [deck]="state.glob.decks[state.deck.id]"></vii-deckbox>
             </ng-container>
-            <ng-container *ngIf="state.deck.user==account.username">
-              <vii-deckbox [deck]="account.decks[state.deck.id]"></vii-deckbox>
+            <ng-container *ngIf="state.deck.user==state.account.username">
+              <vii-deckbox [deck]="state.account.decks[state.deck.id]"></vii-deckbox>
             </ng-container>
           </td>
         </tr>
@@ -26,24 +28,24 @@
       <a routerLink="/play">Click here</a> to start a new Game
     </article-footer>
   </article>
-  <br *ngIf="account.username" />
-  <article *ngIf="account.username">
+  <br *ngIf="state.account.username" />
+  <article *ngIf="state.account.username">
     <article-header>Your Decks</article-header>
     <article-body>
-      <vii-deckbox *ngFor="let deck of account?.decks | mapValues" [deck]="deck">
+      <vii-deckbox *ngFor="let deck of state.account.decks | mapValues" [deck]="deck">
         <a routerLink="/decks/edit/{{deck.id}}" class="fltr">Edit</a>
-        <!-- <img adapt="2" *ngIf="state.deck.user==account.username&&state.deck.id==deck.id" src="/img/icon/star.svg"> -->
-        <button [disabled]="state.deck.user==account.username&&state.deck.id==deck.id" (click)="runtime.setDeck(account.username, deck.id)">
+        <button [disabled]="state.deck.user==state.account.username&&state.deck.id==deck.id"
+                (click)="runtime.setDeck(state.account.username, deck.id)">
           <img adapt="2" src="/img/icon/star.svg">
         </button>
       </vii-deckbox>
     </article-body>
   </article>
-  <br *ngIf="account.username" />
+  <br *ngIf="state.account.username" />
   <article>
     <article-header>Free-to-Play Decks</article-header>
     <article-body>
-      <vii-deckbox *ngFor="let deck of glob?.decks | mapValues" [deck]="deck">
+      <vii-deckbox *ngFor="let deck of state.glob.decks | mapValues" [deck]="deck">
         <a class="fltr" routerLink="/decks/view/{{deck.id}}">View</a>
         <button [disabled]="state.deck.user=='vii'&&state.deck.id==deck.id" (click)="runtime.setDeck('vii', deck.id)">
           <img adapt="2" src="/img/icon/hand.svg">

@@ -8,8 +8,6 @@ import { RouterService } from './router.service'
 })
 export class WebsocketService {
 
-  ping$ = new BehaviorSubject<PingData>(null)
-
   private ws: WebSocket
 
   routes = new Map<string, any>()
@@ -21,7 +19,6 @@ export class WebsocketService {
   }
 
   private setRoutes() {
-    this.routes.set('/ping', data => { this.servePing(data) })
     this.routes.set('/chat/message', data => { this.serveChatMessage(data) })
     this.routes.set('/chat/join', data => { this.serveChatJoin(data) })
     this.routes.set('/redirect', data => { this.serveRedirect(data) })
@@ -85,14 +82,6 @@ export class WebsocketService {
 
   // services
 
-  private servePing(data) {
-    if (!data || !data.ping) {
-      console.debug('ping no data', data)
-    } else {
-      console.debug('ping data', data)
-      this.ping$.next(data)
-    }
-  }
   private serveChatMessage(data) {
     console.debug('chat message', data.username, data.channel, data.message)
     // let msgs = this.chat$(data.channel).value.slice()

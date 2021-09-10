@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { GlobalService } from 'src/app/global.service'
+import { DataService } from 'src/app/data.service'
 
 @Component({
   selector: 'vii-view',
@@ -12,7 +12,7 @@ export class DeckViewComponent implements OnInit, OnDestroy {
   id: number
   private $id: Subscription
 
-  constructor(public glob : GlobalService, private route: ActivatedRoute) { }
+  constructor(public data : DataService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.$id = this.route.params.subscribe(params => {

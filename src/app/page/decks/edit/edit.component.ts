@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
-import { AccountService } from 'src/app/account.service'
-import { Account, DeckEditing } from 'src/app/api'
-import { GlobalService } from 'src/app/global.service'
+import { Deck, DeckEditing } from 'src/app/api'
+import { DataService } from 'src/app/data.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
 @Component({
@@ -25,8 +24,7 @@ export class DeckEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    public glob: GlobalService,
-    public account: AccountService,
+    public data: DataService,
     private ws: WebsocketService,
   ) { }
 
@@ -46,19 +44,23 @@ export class DeckEditComponent implements OnInit, OnDestroy {
 
   // view macros
 
+  private get deck(): Deck {
+    return this.data.account$.value.decks[this.id]
+  }
+
   get dirty(): boolean {
     return this.edits.name.length > 0 || this.edits.cover > 0 || this.edits.cards.size > 0
   }
   
   get coverImage(): number {
-    return this.edits.cover > 0 ? this.edits.cover : this.account.decks[this.id].cover
+    return this.edits.cover > 0 ? this.edits.cover : this.deck.cover
   }
 
   // view to state 
 
   private updateForm() {
     let val = this.form.get('name').value
-    if (val == this.account.decks[this.id].name) {
+    if (val == this.deck.name) {
       this.edits.name = ''
     } else {
       this.edits.name = val
@@ -74,8 +76,8 @@ export class DeckEditComponent implements OnInit, OnDestroy {
   }
 
   savedCardID(cardid: number): number {
-    let diff = this.account.decks[this.id].cards[cardid]
-    if (diff < 0 || diff > 0) return diff
+    let saved = this.deck.cards[cardid]
+    if (saved > 0) return saved
     return 0
   }
 
@@ -84,14 +86,14 @@ export class DeckEditComponent implements OnInit, OnDestroy {
     for (let key of this.edits.cards.keys()) {
       obj[key] = true
     }
-    for (let key of Object.keys(this.account.decks[this.id].cards)) {
+    for (let key of Object.keys(this.deck.cards)) {
       obj[key] = true
     }
     return Object.keys(obj)
   }
 
   getCount(): number {
-    let count = this.account.decks[this.id].size
+    let count = this.deck.size
     this.edits.cards.forEach(val => {
       count += val
     })
@@ -103,9 +105,9 @@ export class DeckEditComponent implements OnInit, OnDestroy {
   clickUp(cardid: number) {
     let diff = this.diffCardID(cardid)
     let count = this.savedCardID(cardid) + diff
-    if (count + 1 === this.account.decks[this.id].cards[cardid]) {
+    if (count + 1 === this.deck.cards[cardid]) {
       this.edits.cards.delete(cardid)
-    } else if (count + 1 <= this.account.cards[cardid]) {
+    } else if (count + 1 <= this.data.account$.value.cards[cardid]) {
       this.edits.cards.set(cardid, diff+1)
     }
   }
@@ -119,7 +121,7 @@ export class DeckEditComponent implements OnInit, OnDestroy {
     }
   }
   clickCover(cardid: number) {
-    if (cardid===this.account.decks[this.id].cover) {
+    if (cardid===this.deck.cover) {
       this.edits.cover = 0
     } else {
       this.edits.cover=cardid
@@ -127,7 +129,7 @@ export class DeckEditComponent implements OnInit, OnDestroy {
   }
   clickSave() {
     let obj = { id: this.id }
-    if (this.edits.name.length > 0 && this.edits.name!==this.account.decks[this.id].name) { obj["name"] = this.edits.name }
+    if (this.edits.name.length > 0 && this.edits.name!==this.deck.name) { obj["name"] = this.edits.name }
     if (this.edits.cards.size > 0) { obj["cards"] = this.edits.cards }
     if (this.edits.cover > 0) { obj["cover"] = this.edits.cover }
     this.edits = new DeckEditing()

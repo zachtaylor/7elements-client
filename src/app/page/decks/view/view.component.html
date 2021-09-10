@@ -1,12 +1,14 @@
-<article *ngIf="glob.decks[id]">
-  <article-header>{{glob.decks[id].name}}</article-header>
-  <article-body>
-    <vii-card *ngFor="let cardid of glob.decks[id].cards | mapKeys" [card]="glob.cards[+cardid-1]">
-      <div style="padding:7px">x{{glob.decks[id].cards[cardid]}}</div>
-    </vii-card>
-  </article-body>
-  <article-footer>
-    <a routerLink="/decks">Click here</a>
-    <span> to return to Decks</span>
-  </article-footer>
-</article>
+<ng-container *ngIf="data.global$ | async as glob">
+  <article *ngIf="glob.decks[id]">
+    <article-header>{{glob.decks[id].name}}</article-header>
+    <article-body>
+      <vii-card *ngFor="let cardid of glob.decks[id].cards | mapKeys" [card]="glob.cards[+cardid-1]">
+        <div style="padding:7px">x{{glob.decks[id].cards[cardid]}}</div>
+      </vii-card>
+    </article-body>
+    <article-footer>
+      <a routerLink="/decks">Click here</a>
+      <span> to return to Decks</span>
+    </article-footer>
+  </article>
+</ng-container>

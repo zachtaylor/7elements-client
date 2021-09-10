@@ -1,43 +1,46 @@
-<article *ngIf="!account.username">
-  <article-header>Buy Packs</article-header>
-  <article-body>No Account</article-body>
-  <article-footer>Please <a routerLink="/account" fragment="login">Click here</a> to login!</article-footer>
-</article>
-<article *ngFor="let pack of glob.packs" [collapse]=true>
-  <article-header>
-    <span>{{pack.name}}</span>
-    <span class="fltr">{{pack.cost}} Coins</span>
-  </article-header>
-  <article-body>
-    <carousel>
-      <ng-container *ngFor="let cardid of pack.cards">
-        <vii-card [card]="glob.cards[cardid-1]">
-          <div style="padding:7px" *ngIf="account.cards[cardid]">x{{account.cards[cardid]}}</div>
-        </vii-card>
-      </ng-container>
-    </carousel>
-  </article-body>
-  <article-footer>
-    <span class="fltl">
-      <span *ngIf="pack.size < 2"> 1 random Card</span>
-      <span *ngIf="pack.size > 1"> {{pack.size}} different random Cards</span>
-    </span>
-    <span *ngIf="account.username">
-      <button *ngIf="account.coins >= pack.cost" (click)="clickBuyPack(pack.id)">
-        <label> BUY </label>
-      </button>
-      <i *ngIf="account.coins < pack.cost">not enough coins to buy this pack</i>
-    </span>
-    <span *ngIf="!account.username">
-      <i>You must be logged in to purchase packs</i>
-    </span>
-  </article-footer>
-</article>
-<ng-container *ngIf="account.username">
-  <div class="posa w100 fntb" style="top:0px;">
+<ng-container *ngIf="{
+  glob: data.global$ | async,
+  account: data.account$ | async
+} as state">
+  <article *ngIf="!state.account.username">
+    <article-header>Buy Packs</article-header>
+    <article-body>No Account</article-body>
+    <article-footer>Please <a routerLink="/account" fragment="login">Click here</a> to login!</article-footer>
+  </article>
+  <article *ngFor="let pack of state.glob.packs" [collapse]=true>
+    <article-header>
+      <span>{{pack.name}}</span>
+      <span class="fltr">{{pack.cost}} Coins</span>
+    </article-header>
+    <article-body>
+      <carousel>
+        <ng-container *ngFor="let cardid of pack.cards">
+          <vii-card [card]="state.glob.cards[cardid-1]">
+            <div style="padding:7px" *ngIf="state.account.cards[cardid]">x{{state.account.cards[cardid]}}</div>
+          </vii-card>
+        </ng-container>
+      </carousel>
+    </article-body>
+    <article-footer>
+      <span class="fltl">
+        <span *ngIf="pack.size < 2"> 1 random Card</span>
+        <span *ngIf="pack.size > 1"> {{pack.size}} different random Cards</span>
+      </span>
+      <span *ngIf="state.account.username">
+        <button *ngIf="state.account.coins >= pack.cost" (click)="clickBuyPack(pack.id)">
+          <label> BUY </label>
+        </button>
+        <i *ngIf="state.account.coins < pack.cost">not enough coins to buy this pack</i>
+      </span>
+      <span *ngIf="!state.account.username">
+        <i>You must be logged in to purchase packs</i>
+      </span>
+    </article-footer>
+  </article>
+  <div *ngIf="state.account.username" class="posa w100 fntb" style="top:0px;">
     <span class="posf flxr w100 ptrn">
       <span class="flx1"></span>
-      <span class="flx1 talc balance">{{account.coins}} Coins</span>
+      <span class="flx1 talc balance">{{state.account.coins}} Coins</span>
       <span class="flx1"></span>
     </span>
   </div>

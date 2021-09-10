@@ -1,11 +1,19 @@
 export class Account {
   username: string
   email: string
-  sessionlife: string
   coins: number
   cards: Map<number, number>
   decks: Map<number, Deck>
   game: string
+
+  constructor() {
+    this.username=''
+    this.email=''
+    this.coins=0
+    this.cards = new Map<number, number>()
+    this.decks = new Map<number, Deck>()
+    this.game = ''
+  }
 }
 
 export class Card {
@@ -142,6 +150,12 @@ export class GlobalData {
   decks: Map<number, Deck>
   packs: Array<Pack>
   users: number
+  constructor() {
+    this.cards = []
+    this.decks = new Map<number, Deck>()
+    this.packs = []
+    this.users = 0
+  }
 }
 
 export class PingData {

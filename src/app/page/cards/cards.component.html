@@ -1,17 +1,13 @@
-<article>
+<article *ngIf="{
+  glob: data.global$ | async,
+  account: data.account$ | async
+} as state">
   <article-header>Cards</article-header>
   <article-body>
-    <ng-container *ngFor="let card of glob.cards">
-      <span *ngIf="account.cards[card.id] then showOwned; else showBasic">
-      </span>
-      <ng-template #showOwned>
-        <vii-card [card]="card">
-          <div style="padding:7px">x{{account.cards[card.id]}}</div>
-        </vii-card>
-      </ng-template>
-      <ng-template #showBasic>
-        <vii-card [card]="card"></vii-card>
-      </ng-template>
+    <ng-container *ngFor="let card of state.glob.cards">
+      <vii-card [card]="card">
+        <div *ngIf="state.account.cards[card.id]" style="padding:7px">x{{state.account.cards[card.id]}}</div>
+      </vii-card>
     </ng-container>
   </article-body>
 </article>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { GlobalService } from 'src/app/global.service'
+import { DataService } from 'src/app/data.service'
 
 @Component({
   selector: 'vii-intro',
@@ -8,6 +8,6 @@ import { GlobalService } from 'src/app/global.service'
 })
 export class IntroComponent {
 
-  constructor(public glob : GlobalService) { }
+  constructor(public data : DataService) { }
 
 }

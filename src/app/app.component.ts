@@ -1,11 +1,12 @@
-import { Component, HostListener } from '@angular/core'
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core'
 import { CookieService } from './cookie.service'
-import { StyleService } from './style.service';
+import { StyleService } from './style.service'
 
 @Component({
   selector: 'vii-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   title = ''

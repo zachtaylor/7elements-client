@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { AccountService } from '../account.service'
+import { DataService } from '../data.service'
 import { RouterService } from '../router.service'
 
 @Component({
@@ -7,16 +7,11 @@ import { RouterService } from '../router.service'
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.less']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
 
-  constructor(public router : RouterService, public account : AccountService) { }
-
-  ngOnInit(): void {
-  }
-
-  getAccountLinkName() : string {
-    if (this.account.username) return this.account.username
-    return 'My Account'
-  }
+  constructor(
+    public router : RouterService,
+    public data : DataService
+  ) { }
 
 }
