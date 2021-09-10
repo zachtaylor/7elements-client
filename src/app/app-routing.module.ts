@@ -8,6 +8,7 @@ import { DeckEditComponent } from "./page/decks/edit/edit.component"
 import { DeckViewComponent } from "./page/decks/view/view.component"
 import { DeveloperComponent } from "./page/developer/developer.component"
 import { ArtistComponent } from "./page/developer/artist/artist.component"
+import { NextComponent } from "./page/developer/next/next.component"
 import { SinkComponent } from "./page/developer/sink/sink.component"
 import { IndexComponent } from "./page/index/index.component"
 import { IntroComponent } from "./page/intro/intro.component"
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'decks/view/:id', component: DeckViewComponent },
   { path: 'dev', component: DeveloperComponent },
   { path: 'dev/art', component: ArtistComponent },
+  { path: 'dev/next', component: NextComponent },
   { path: 'dev/sink', component: SinkComponent },
   { path: '**', redirectTo:'not-found' }
 ];

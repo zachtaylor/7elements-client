@@ -13,9 +13,9 @@ import { CardComponent } from './card/card.component'
 import { DeckboxComponent } from './deckbox/deckbox.component'
 import { CarouselComponent } from './carousel/carousel.component'
 import { FormDetailComponent } from './form-detail/form-detail.component'
-import { ArticleHeaderComponent } from './article/header/header.component';
-import { ArticleBodyComponent } from './article/body/body.component';
-import { ArticleFooterComponent } from './article/footer/footer.component';
+import { ArticleHeaderComponent } from './article/header/header.component'
+import { ArticleBodyComponent } from './article/body/body.component'
+import { ArticleFooterComponent } from './article/footer/footer.component'
 
 // pages
 import { AccountComponent } from './page/account/account.component'
@@ -29,9 +29,10 @@ import { DeckViewComponent } from './page/decks/view/view.component'
 import { IndexComponent } from './page/index/index.component'
 import { IntroComponent } from './page/intro/intro.component'
 import { NotFoundComponent } from './page/notfound/notfound.component'
-import { UpdatesComponent } from './page/updates/updates.component';
+import { UpdatesComponent } from './page/updates/updates.component'
 import { DeveloperComponent } from './page/developer/developer.component'
 import { ArtistComponent } from './page/developer/artist/artist.component'
+import { NextComponent } from './page/developer/next/next.component'
 import { SinkComponent } from './page/developer/sink/sink.component'
 
 @NgModule({
@@ -70,6 +71,7 @@ import { SinkComponent } from './page/developer/sink/sink.component'
     DeckViewComponent,
     DeveloperComponent,
     ArtistComponent,
+    NextComponent,
     SinkComponent
   ],
   imports: [
