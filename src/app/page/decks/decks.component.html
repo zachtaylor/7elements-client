@@ -1,7 +1,7 @@
 <ng-container *ngIf="{
   glob: data.global$ | async,
   account: data.account$ | async,
-  deck: runtime.deck$ | async
+  settings: data.newgamesettings$ | async
 } as state">
   <article *ngIf="state.account.username">
     <article-header>Your Deck</article-header>
@@ -14,19 +14,16 @@
             <div>Scroll down to <img adapt="2" src="/img/icon/hand.svg">Select a different one</div>
           </td>
           <td class="talr">
-            <ng-container *ngIf="state.deck.user=='vii'">
-              <vii-deckbox [deck]="state.glob.decks[state.deck.id]"></vii-deckbox>
+            <ng-container *ngIf="state.settings.owner=='vii'">
+              <vii-deckbox [deck]="state.glob.decks[state.settings.deckid]"></vii-deckbox>
             </ng-container>
-            <ng-container *ngIf="state.deck.user==state.account.username">
-              <vii-deckbox [deck]="state.account.decks[state.deck.id]"></vii-deckbox>
+            <ng-container *ngIf="state.settings.owner==state.account.username">
+              <vii-deckbox [deck]="state.account.decks[state.settings.deckid]"></vii-deckbox>
             </ng-container>
           </td>
         </tr>
       </table>
     </article-body>
-    <article-footer>
-      <a routerLink="/play">Click here</a> to start a new Game
-    </article-footer>
   </article>
   <br *ngIf="state.account.username" />
   <article *ngIf="state.account.username">
@@ -34,8 +31,8 @@
     <article-body>
       <vii-deckbox *ngFor="let deck of state.account.decks | mapValues" [deck]="deck">
         <a routerLink="/decks/edit/{{deck.id}}" class="fltr">Edit</a>
-        <button [disabled]="state.deck.user==state.account.username&&state.deck.id==deck.id"
-                (click)="runtime.setDeck(state.account.username, deck.id)">
+        <button [disabled]="state.settings.owner==state.account.username&&state.settings.deckid==deck.id"
+                (click)="clickSetDeck(deck.id, state.account.username)">
           <img adapt="2" src="/img/icon/star.svg">
         </button>
       </vii-deckbox>
@@ -47,7 +44,8 @@
     <article-body>
       <vii-deckbox *ngFor="let deck of state.glob.decks | mapValues" [deck]="deck">
         <a class="fltr" routerLink="/decks/view/{{deck.id}}">View</a>
-        <button [disabled]="state.deck.user=='vii'&&state.deck.id==deck.id" (click)="runtime.setDeck('vii', deck.id)">
+        <button [disabled]="state.settings.owner=='vii'&&state.settings.deckid==deck.id"
+                (click)="clickSetDeck(deck.id, 'vii')">
           <img adapt="2" src="/img/icon/hand.svg">
         </button>
       </vii-deckbox>

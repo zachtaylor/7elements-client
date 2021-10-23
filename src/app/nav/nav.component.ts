@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { DataService } from '../data.service'
+import { GameService } from '../game.service'
 import { RouterService } from '../router.service'
 
 @Component({
@@ -11,7 +12,8 @@ export class NavComponent {
 
   constructor(
     public router : RouterService,
-    public data : DataService
+    public data : DataService,
+    public game : GameService
   ) { }
 
 }

@@ -81,13 +81,31 @@ export class GameState {
   stack: string
   parent: string
   child: string
+  constructor(data: string | GameState) {
+    if (typeof(data)==='string') {
+      this.id = data
+      this.reacts = new Map<string, string>()
+    } else {
+      this.id = data.id
+      this.name = data.name
+      this.data = data.data
+      this.seat = data.seat
+      this.timer = data.timer
+      this.reacts = data.reacts
+      this.stack = data.stack
+      this.parent = data.parent
+      this.child = data.child
+    }
+  }
 }
 
 export class GameSeat {
   username: string
   elements: Map<number, Array<boolean>>
   hand: number
+  present: number
   future: number
+  past: number
   life: number
   color: string
 
@@ -101,6 +119,10 @@ export class GameCard {
   id: string
   cardid: number
   user: string
+
+  constructor(id: string) {
+    this.id = id
+  }
 }
 
 export class GameToken {
@@ -116,6 +138,10 @@ export class GameToken {
     health: number
   }
   type: string
+  constructor(id: string) {
+    this.id = id
+    this.powers = []
+  }
 }
 
 export class Pack {
@@ -212,23 +238,25 @@ export class Message {
   }
 }
 
-export class DeckSetting {
-  user: string
-  id: number
-  constructor(user = 'vii', id = 1) {
-    this.user = user
-    this.id = id
-  }
-}
-
-export class QueueSetting {
+export class Queue {
+  deckid: number
+  owner: string
   pvp: boolean
-  custom: boolean
   hands: string
   speed: string
-  constructor(pvp = false, custom = false, hands = 'med', speed = 'slow') {
+  timer: number
+}
+
+export class NewGameSettings {
+  deckid: number
+  owner: string
+  pvp: boolean
+  hands: string
+  speed: string
+  constructor(deckid=1,owner='vii',pvp=false,hands='med',speed='med') {
+    this.deckid = deckid
+    this.owner = owner
     this.pvp = pvp
-    this.custom = custom
     this.hands = hands
     this.speed = speed
   }

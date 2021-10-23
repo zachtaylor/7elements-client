@@ -1,0 +1,14 @@
+<ng-container *ngIf="data.account$ | async as account">
+  <ng-container *ngIf="!account.username">
+    <i>loading...</i>
+  </ng-container>
+  <ng-container *ngIf="account.username">
+    <ng-container *ngIf="!game.id">
+      <br/>
+      <b>no game</b>
+      <br/><br/>
+      <a routerLink="/">Go home</a>
+    </ng-container>
+    <ng-container *ngIf="game.id"></ng-container>
+  </ng-container>
+</ng-container>

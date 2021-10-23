@@ -1,121 +1,108 @@
-// import { Injectable } from '@angular/core'
-// import { BehaviorSubject } from 'rxjs'
-// import { GameCard, GameMenu, GameMenuChoice, GameSeat, GameState, GameToken } from './api'
-// import { RouterService } from './router.service'
-// import { WebsocketService } from './websocket.service'
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, defer } from 'rxjs'
+import { GameCard, GameMenu, GameMenuChoice, GameSeat, GameState, GameToken, Queue } from './api'
+import { RouterService } from './router.service'
+import { WebsocketService } from './websocket.service'
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class GameService {
+@Injectable({
+  providedIn: 'root'
+})
+export class GameService {
 
-//   id : string
+  id : string
 
-//   username : string
+  viewstate : string
 
-//   stateid : string
-
-//   hand$ = new BehaviorSubject<string[]>([])
+  hand$ = new BehaviorSubject<string[]>([])
 
 //   menu$ = new BehaviorSubject<GameMenu>(null)
 
-//   private cards = new Map<string, BehaviorSubject<GameCard>>()
+  constructor(private ws : WebsocketService, private router : RouterService) {
+    this.ws.routes.set('/game', data => { this.serveGame(data) })
+    this.ws.routes.set('/game/hand', data => { this.serveGameHand(data) })
+    this.ws.routes.set('/game/card', data => { this.serveGameCard(data) })
+    this.ws.routes.set('/game/token', data => { this.serveGameToken(data) })
+    this.ws.routes.set('/game/present', data => { this.serveGamePresent(data) })
+    this.ws.routes.set('/game/state', data => { this.serveGameState(data) })
+    this.ws.routes.set('/game/seat', data => { this.serveGameSeat(data) })
+    this.ws.routes.set('/game/react', data => { this.serveGameReact(data) })
+  }
 
-//   private tokens = new Map<string, BehaviorSubject<GameToken>>()
+  private serveGame(data) {
+    console.debug('/game', data)
+    if (!data) {
+      this.id = ''
+      return
+    }
+    this.id = data.id
+    // this.stateid = data.stateid
+    // this.username = data.username
 
-//   private states = new Map<string, BehaviorSubject<GameState>>()
+    if (this.router.path != '/play') this.router.goto('/play')
 
-//   private seats = new Map<string, BehaviorSubject<GameSeat>>()
+    if (data.seats && data.seats.length) {
+      for (let i = 0; i < data.seats.length; i++) {
+        let username = data.seats[i]
+        this.seat$(username) // ifndef creates
+      }
+    } else {
+      console.warn('seats missing', data)
+    }
+  }
 
-//   private present = new Map<string, BehaviorSubject<string[]>>()
+  private serveGameHand(data) {
+    console.debug('/game/hand', data.cards)
+    this.hand$.next(data.cards)
+  }
+  private serveGameCard(data) {
+    console.debug('/game/card', data.id, data.name)
+    this.card$(data.id).next(data)
+  }
+  private serveGameToken(data) {
+    console.debug('/game/token', data.id, data.name, data.user)
+    this.token$(data.id).next(data)
+  }
+  private serveGamePresent(data) {
+    console.debug('/game/present', data.username, data.present)
+    this.present$(data.username).next(data.present)
+  }
 
-//   private past = new Map<string, BehaviorSubject<string[]>>()
+  private serveGameSeat(data: any) {
+    console.debug('/game/seat', data.username)
+    let seat = new GameSeat(data.username)
+    seat.hand = data.hand
+    seat.present = data.present
+    seat.future = data.future
+    seat.past = data.past
+    seat.life = data.life
+    seat.color = data.color
 
-//   constructor(private ws : WebsocketService, private router : RouterService) {
-//     let me = this
-//     setTimeout(() => { me.wsroutes() })
-//   }
+    for (let i = 1; i < 8; i++) {
+      let elrow = data.elements[i]
+      if ((!elrow) || (!elrow.length)) { continue }
+      seat.elements[i] = elrow
+    }
+    this.seat$(data.username).next(seat)
+  }
 
-//   private wsroutes() {
-//     this.ws.routes.set('/game', data => { this.serveGame(data) })
-//     this.ws.routes.set('/game/hand', data => { this.serveGameHand(data) })
-//     this.ws.routes.set('/game/card', data => { this.serveGameCard(data) })
-//     this.ws.routes.set('/game/token', data => { this.serveGameToken(data) })
-//     this.ws.routes.set('/game/present', data => { this.serveGamePresent(data) })
-//     this.ws.routes.set('/game/state', data => { this.serveGameState(data) })
-//     this.ws.routes.set('/game/seat', data => { this.serveGameSeat(data) })
-//     this.ws.routes.set('/game/react', data => { this.serveGameReact(data) })
-//   }
+  private serveGameState(data) {
+    console.debug('/game/state', data.id, data.name, data.seat)
+    let state$ = this.state$(data.id)
+    let state = state$.value
+    if (state.parent) {
+      data.parent = state.parent
+    }
+    state$.next(data)
 
-//   private serveGame(data) {
-//     if (!data) {
-//       this.id = ''
-//       return
-//     }
-//     console.debug('/game', data.id, data.username, data.stateid)
-//     this.id = data.id
-//     this.stateid = data.stateid
-//     this.username = data.username
-//     if (this.router.path != '/play') this.router.goto('/play')
-//     if (data.seats && data.seats.length) {
-//       for (let i = 0; i < data.seats.length; i++) {
-//         let username = data.seats[i]
-//         let seat$ = this.seat$(username)
-//         if (!seat$.value) {
-//           seat$.next(new GameSeat(username))
-//         }
-//       }
-//     } else {
-//       console.warn('seats missing', data)
-//     }
-//   }
-
-//   private serveGameHand(data) {
-//     console.debug('/game/hand', data.cards)
-//     this.hand$.next(data.cards)
-//   }
-
-//   private serveGameCard(data) {
-//     console.debug('/game/card', data.id, data.name)
-//     this.card$(data.id).next(data)
-//   }
-
-//   private serveGameToken(data) {
-//     console.debug('/game/token', data.id, data.name, data.user)
-//     this.token$(data.id).next(data)
-//   }
-
-//   private serveGamePresent(data) {
-//     console.debug('/game/present', data.username, data.present)
-//     if (!data) { return }
-//     let present$ = this.present$(data.username)
-//     if (data.present && data.present.length) { present$.next(data.present) }
-//     else { console.warn('present missing', data) }
-//   }
-
-//   private serveGameSeat(data: any) {
-//     console.debug('/game/seat', data.username)
-//     let seat$ = this.seat$(data.username)
-//     if (!seat$.value) { return }
-//     let seat = seat$.value
-//     if (seat.life !== data.life) { seat.life = data.life }
-//     if (seat.hand !== data.hand) { seat.hand = data.hand }
-//     if (seat.future !== data.future) { seat.future = data.future }
-//     if (data.present) { this.past$(seat.username).next(data.present) }
-//     if (data.past) { this.past$(seat.username).next(data.past) }
-//     for (let i = 1; i < 8; i++) {
-//       // console.debug('/game/seat/elements', i, data.elements[i])
-//       let elLights = data.elements[i]
-//       if ((!elLights) || (!elLights.length)) { continue }
-//       seat.elements[i] = elLights
-//     }
-//     seat$.next(seat)
-//     this.present$(seat.username).next(data.present)
-//   }
+    if (data.stack) {
+      let child$ = this.state$(data.stack)
+      state = child$.value
+      state.parent = data.id
+      child$.next(state)
+    }
+  }
 
 //   private serveGameState(data) {
-//     console.debug('/game/state', data.id, data.name, data.seat)
-//     // this.state$.next(data)
 //     this.state$(data.id).next(data)
 //     if (data.stack) {
 //       let child$ = this.state$(data.stack)
@@ -142,14 +129,14 @@
 //     }
 //   }
 
-//   private serveGameReact(data: any) {
-//     console.debug('/game/react', data.stateid, data.username, data.react)
-//     let state$ = this.state$(data.stateid)
-//     let state = state$.value
-//     if (state.reacts[data.username]) return;
-//     state.reacts[data.username] = data.react
-//     state$.next(state)
-//   }
+  private serveGameReact(data: any) {
+    console.debug('/game/react', data.stateid, data.username, data.react)
+    let state$ = this.state$(data.stateid)
+    let state = state$.value
+    if (state.reacts[data.username]) return;
+    state.reacts[data.username] = data.react
+    state$.next(state)
+  }
 
 //   // public
   
@@ -162,59 +149,65 @@
 //     return opponents
 //   }
 
-//   state$(id : string) : BehaviorSubject<GameState> {
-//     let state = this.states.get(id)
-//     if (!state) {
-//       state = new BehaviorSubject<GameState>(null)
-//       this.states.set(id, state)
-//     }
-//     return state
-//   }
+  private state = new Map<string, BehaviorSubject<GameState>>()
+  state$(id : string) : BehaviorSubject<GameState> {
+    let state = this.state.get(id)
+    if (!state) {
+      state = new BehaviorSubject<GameState>(new GameState(id))
+      this.state.set(id, state)
+    }
+    return state
+  }
 
-//   card$(id: string) : BehaviorSubject<GameCard> {
-//     let card = this.cards.get(id)
-//     if (!card) {
-//       card = new BehaviorSubject<GameCard>(null)
-//       this.cards.set(id, card)
-//     }
-//     return card
-//   }
+  private card = new Map<string, BehaviorSubject<GameCard>>()
+  card$(id: string) : BehaviorSubject<GameCard> {
+    let card = this.card.get(id)
+    if (!card) {
+      card = new BehaviorSubject<GameCard>(new GameCard(id))
+      this.card.set(id, card)
+    }
+    return card
+  }
 
-//   token$(id: string) : BehaviorSubject<GameToken> {
-//     let token = this.tokens.get(id)
-//     if (!token) {
-//       token = new BehaviorSubject<GameToken>(null)
-//       this.tokens.set(id, token)
-//     }
-//     return token
-//   }
+  private token = new Map<string, BehaviorSubject<GameToken>>()
+  token$(id: string) : BehaviorSubject<GameToken> {
+    let token = this.token.get(id)
+    if (!token) {
+      token = new BehaviorSubject<GameToken>(new GameToken(id))
+      this.token.set(id, token)
+    }
+    return token
+  }
 
-//   seat$(name : string) : BehaviorSubject<GameSeat> {
-//     let seat = this.seats.get(name)
-//     if (!seat) {
-//       seat = new BehaviorSubject<GameSeat>(null)
-//       this.seats.set(name, seat)
-//     }
-//     return seat
-//   }
+  private seat = new Map<string, BehaviorSubject<GameSeat>>()
+  seat$(name : string) : BehaviorSubject<GameSeat> {
+    let seat = this.seat.get(name)
+    if (!seat) {
+      seat = new BehaviorSubject<GameSeat>(new GameSeat(name))
+      this.seat.set(name, seat)
+    }
+    return seat
+  }
 
-//   present$(name : string) : BehaviorSubject<string[]> {
-//     let present = this.present.get(name)
-//     if (!present) {
-//       present = new BehaviorSubject<string[]>([])
-//       this.present.set(name, present)
-//     }
-//     return present
-//   }
+  private present = new Map<string, BehaviorSubject<string[]>>()
+  present$(name : string) : BehaviorSubject<string[]> {
+    let present = this.present.get(name)
+    if (!present) {
+      present = new BehaviorSubject<string[]>([])
+      this.present.set(name, present)
+    }
+    return present
+  }
 
-//   past$(name : string) : BehaviorSubject<string[]> {
-//     let past = this.past.get(name)
-//     if (!past) {
-//       past = new BehaviorSubject<string[]>([])
-//       this.past.set(name, past)
-//     }
-//     return past
-//   }
+  private past = new Map<string, BehaviorSubject<string[]>>()
+  past$(name : string) : BehaviorSubject<string[]> {
+    let past = this.past.get(name)
+    if (!past) {
+      past = new BehaviorSubject<string[]>([])
+      this.past.set(name, past)
+    }
+    return past
+  }
 
 //   // overlay
   
@@ -265,4 +258,4 @@
 //     this.menu$.next(overlay)
 //   }
 
-// }
+}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
+import { CookieService } from 'src/app/cookie.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
 @Component({
@@ -14,10 +15,11 @@ export class LoginComponent {
     password: new FormControl(''),
   })
 
-  constructor(private ws : WebsocketService) { }
+  constructor(private cookies : CookieService, private ws : WebsocketService) { }
 
   submit() {
-    if (!this.form.valid) { return console.debug('form invalid: ', this.form) }
+    if (!this.form.valid) { return }
+    if (!this.cookies.allow) { return alert('please accept cookies') }
 
     this.ws.send('/login', {
       username:this.form.get('username').value,

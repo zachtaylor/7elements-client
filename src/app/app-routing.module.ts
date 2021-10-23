@@ -14,9 +14,12 @@ import { IndexComponent } from "./page/index/index.component"
 import { IntroComponent } from "./page/intro/intro.component"
 import { NotFoundComponent } from "./page/notfound/notfound.component"
 import { UpdatesComponent } from "./page/updates/updates.component"
+import { PlayComponent } from "./page/play/play.component"
+import { LostComponent } from "./page/lost/lost.component"
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
+  { path: 'lost', component: LostComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'intro', component: IntroComponent },
   { path: 'updates', component: UpdatesComponent },
@@ -26,6 +29,7 @@ const routes: Routes = [
   { path: 'decks', component: DecksComponent },
   { path: 'decks/edit/:id', component: DeckEditComponent },
   { path: 'decks/view/:id', component: DeckViewComponent },
+  { path: 'play', component: PlayComponent },
   { path: 'dev', component: DeveloperComponent },
   { path: 'dev/art', component: ArtistComponent },
   { path: 'dev/next', component: NextComponent },

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms'
+import { CookieService } from 'src/app/cookie.service'
 import { ValidatorService } from 'src/app/validator.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
@@ -19,7 +20,7 @@ export class SignupComponent {
     password2: new FormControl('',),
   }, this.validatePasswordMatch)
 
-  constructor(private validator : ValidatorService, private ws : WebsocketService) { }
+  constructor(private validator : ValidatorService, private cookies : CookieService, private ws : WebsocketService) { }
 
   get f() { return this.form.controls }
 
@@ -68,6 +69,7 @@ export class SignupComponent {
 
   submit() {
     if (!this.form.valid) { return }
+    if (!this.cookies.allow) { return alert('please accept cookies') }
 
     this.ws.send('/signup', {
       username:this.form.get('username').value,

@@ -33,7 +33,10 @@ import { UpdatesComponent } from './page/updates/updates.component'
 import { DeveloperComponent } from './page/developer/developer.component'
 import { ArtistComponent } from './page/developer/artist/artist.component'
 import { NextComponent } from './page/developer/next/next.component'
-import { SinkComponent } from './page/developer/sink/sink.component'
+import { SinkComponent } from './page/developer/sink/sink.component';
+import { PlayComponent } from './page/play/play.component';
+import { TickerComponent } from './ticker/ticker.component';
+import { LostComponent } from './page/lost/lost.component'
 
 @NgModule({
   declarations: [
@@ -69,10 +72,13 @@ import { SinkComponent } from './page/developer/sink/sink.component'
     DecksComponent,
     DeckEditComponent,
     DeckViewComponent,
+    PlayComponent,
     DeveloperComponent,
     ArtistComponent,
     NextComponent,
-    SinkComponent
+    SinkComponent,
+    TickerComponent,
+    LostComponent
   ],
   imports: [
     BrowserModule,

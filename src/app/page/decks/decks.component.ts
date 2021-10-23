@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { DataService } from 'src/app/data.service'
-import { RuntimeService } from 'src/app/runtime.service'
 
 @Component({
   selector: 'vii-decks',
@@ -9,9 +8,11 @@ import { RuntimeService } from 'src/app/runtime.service'
 })
 export class DecksComponent  {
 
-  constructor(
-    public runtime : RuntimeService,
-    public data : DataService,
-  ) { }
+  constructor(public data : DataService) { }
+
+  clickSetDeck(deckid: number, owner: string) {
+    let old = this.data.newgamesettings$.value
+    this.data.setNewGameSettings(deckid, owner, old.pvp, old.hands, old.speed)
+  }
 
 }

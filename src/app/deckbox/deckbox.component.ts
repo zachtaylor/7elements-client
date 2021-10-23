@@ -1,6 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core'
 import { Deck } from '../api'
-import { RuntimeService } from '../runtime.service'
 
 @Component({
   selector: 'vii-deckbox',
@@ -14,6 +13,6 @@ export class DeckboxComponent {
   @HostBinding('class.active')
   isActive : boolean = false
 
-  constructor(public runtime : RuntimeService) { }
+  constructor() { }
 
 }

@@ -16,7 +16,7 @@
       </div>
       <div class="form-row">
         <label>password</label>
-        <input type="password" formControlName="password" autocomplete="current-password" required>
+        <input type="password" formControlName="password" autocomplete="current-password" required (keyup.enter)="submit()">
       </div>
     </form>
     <div class="w100 talr">
