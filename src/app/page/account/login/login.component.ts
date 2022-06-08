@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { CookieService } from 'src/app/cookie.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
@@ -10,9 +10,9 @@ import { WebsocketService } from 'src/app/websocket.service'
 })
 export class LoginComponent {
 
-  form = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+  form = new UntypedFormGroup({
+    username: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
   })
 
   constructor(private cookies : CookieService, private ws : WebsocketService) { }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { DataService } from 'src/app/data.service'
 import { WebsocketService } from 'src/app/websocket.service'
@@ -12,13 +12,13 @@ import { WebsocketService } from 'src/app/websocket.service'
 export class AccountComponent implements OnInit {
   private hash = ''
 
-  changeEmail = new FormGroup({
-    email: new FormControl(''),
+  changeEmail = new UntypedFormGroup({
+    email: new UntypedFormControl(''),
   })
 
-  changePassword = new FormGroup({
-    password1: new FormControl(''),
-    password2: new FormControl(''),
+  changePassword = new UntypedFormGroup({
+    password1: new UntypedFormControl(''),
+    password2: new UntypedFormControl(''),
   })
 
   constructor(

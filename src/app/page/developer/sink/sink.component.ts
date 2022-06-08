@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { FormGroup, FormControl, AbstractControl, ValidationErrors } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl, AbstractControl, ValidationErrors } from '@angular/forms'
 
 @Component({
   selector: 'vii-sink',
@@ -8,11 +8,11 @@ import { FormGroup, FormControl, AbstractControl, ValidationErrors } from '@angu
 })
 export class SinkComponent {
 
-  form = new FormGroup({
-    username1: new FormControl('',
+  form = new UntypedFormGroup({
+    username1: new UntypedFormControl('',
       this.validateUsername,
     ),
-    username2: new FormControl('',
+    username2: new UntypedFormControl('',
       this.validateUsername,
     ),
   })

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs'
 import { Deck, DeckEditing } from 'src/app/api'
@@ -15,8 +15,8 @@ export class DeckEditComponent implements OnInit, OnDestroy {
   id: number
   private $id: Subscription
 
-  form = new FormGroup({
-    name: new FormControl(''),
+  form = new UntypedFormGroup({
+    name: new UntypedFormControl(''),
   })
   private $formUpdate: Subscription
 

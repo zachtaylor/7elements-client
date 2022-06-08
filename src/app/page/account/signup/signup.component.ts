@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormControl, Validators, ValidationErrors } from '@angular/forms'
 import { CookieService } from 'src/app/cookie.service'
 import { ValidatorService } from 'src/app/validator.service'
 import { WebsocketService } from 'src/app/websocket.service'
@@ -11,13 +11,13 @@ import { WebsocketService } from 'src/app/websocket.service'
 })
 export class SignupComponent {
 
-  form = new FormGroup({
-    username: new FormControl('', [
+  form = new UntypedFormGroup({
+    username: new UntypedFormControl('', [
       Validators.required
     ], this.validator.UsernameUnique()),
-    email: new FormControl(''),
-    password1: new FormControl(''),
-    password2: new FormControl('',),
+    email: new UntypedFormControl(''),
+    password1: new UntypedFormControl(''),
+    password2: new UntypedFormControl('',),
   }, this.validatePasswordMatch)
 
   constructor(private validator : ValidatorService, private cookies : CookieService, private ws : WebsocketService) { }
@@ -55,7 +55,7 @@ export class SignupComponent {
   //   return of(Math.random() > 0.7 ? null : { unique:{value:value} }).pipe(delay(2500))
   // }
 
-  validatePasswordMatch(formGroup: FormGroup): ValidationErrors {
+  validatePasswordMatch(formGroup: UntypedFormGroup): ValidationErrors {
     let password1 = formGroup.controls['password1']
     let password2 = formGroup.controls['password2']
     if ( password2.errors && !password2.errors.match ) {
