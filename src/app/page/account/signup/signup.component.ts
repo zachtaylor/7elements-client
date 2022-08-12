@@ -1,45 +1,60 @@
-import { Component, OnInit } from '@angular/core'
-import { UntypedFormGroup, UntypedFormControl, Validators, ValidationErrors } from '@angular/forms'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms'
+import { Subscription } from 'rxjs'
 import { CookieService } from 'src/app/cookie.service'
 import { ValidatorService } from 'src/app/validator.service'
 import { WebsocketService } from 'src/app/websocket.service'
 
 @Component({
   selector: 'vii-signup',
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.less']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit, OnDestroy {
 
-  form = new UntypedFormGroup({
-    username: new UntypedFormControl('', [
-      Validators.required
+  form = new FormGroup({
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(7)
     ], this.validator.UsernameUnique()),
-    email: new UntypedFormControl(''),
-    password1: new UntypedFormControl(''),
-    password2: new UntypedFormControl('',),
+    email: new FormControl(''),
+    password1: new FormControl(''),
+    password2: new FormControl('',),
   }, this.validatePasswordMatch)
 
-  constructor(private validator : ValidatorService, private cookies : CookieService, private ws : WebsocketService) { }
+  errUsername: String
 
-  get f() { return this.form.controls }
+  private $formStatus: Subscription
+  private pendingValidation: boolean
 
-  showUsernameAvailable() : boolean {
-    let f = this.f
-    return !f.username.pristine && f.username.valid
+  constructor(
+    private validator: ValidatorService,
+    private cd: ChangeDetectorRef,
+    private cookies: CookieService,
+    private ws: WebsocketService
+  ) {}
+
+  ngOnInit() {
+    this.$formStatus = this.form.statusChanges.subscribe(status => {
+      if (status === 'PENDING') {
+        console.log('pending validation')
+        this.pendingValidation = true
+      } else if (this.pendingValidation) {
+        console.log('validation complete', this.form)
+        this.pendingValidation = false
+        this.cd.markForCheck()
+      }
+    })
+    console.log(this.form)
   }
-  showUsernamePending() : boolean {
-    let f = this.f
-    return !f.username.pristine && f.username.pending
+
+  ngOnDestroy() {
+    this.$formStatus.unsubscribe()
   }
-  showUsernameError() : boolean {
-    let f = this.f
-    return !f.username.pristine && f.username.invalid
-  }
-  showUsernameTaken() : boolean {
-    let f = this.f
-    return !f.username.pristine && f.username.invalid && f.username.errors.unique
-  }
+
+  // get f() { return this.form.controls }
+
   // showUsernameEmpty() : boolean {
   //   return !this.f.username.pristine && this.f.username.invalid && this.f.username.errors.empty
   // }
@@ -55,7 +70,7 @@ export class SignupComponent {
   //   return of(Math.random() > 0.7 ? null : { unique:{value:value} }).pipe(delay(2500))
   // }
 
-  validatePasswordMatch(formGroup: UntypedFormGroup): ValidationErrors {
+  validatePasswordMatch(formGroup: FormGroup): ValidationErrors {
     let password1 = formGroup.controls['password1']
     let password2 = formGroup.controls['password2']
     if ( password2.errors && !password2.errors.match ) {

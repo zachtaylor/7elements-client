@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { PingData } from './api'
 import { RouterService } from './router.service'
+import { environment as env } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class WebsocketService {
   }
 
   private start() {
-    this.ws = new WebSocket(window.location.protocol.replace('http', 'ws') + window.location.host + '/api/websocket')
+    this.ws = new WebSocket(window.location.protocol.replace('http', 'ws') + '//' + env.apiHostname + '/websocket')
     this.ws.onopen = () => { 
       console.debug('opened')
     }
@@ -108,7 +109,8 @@ export class WebsocketService {
   // helper
 
   private replacer(key, value) {
-    if(value instanceof Map) {
+    if (value instanceof Map) {
+      console.warn('replacing', key, value)
       let obj = {}
       value.forEach((val, key) => {
         obj[key] = val

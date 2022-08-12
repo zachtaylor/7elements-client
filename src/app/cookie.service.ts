@@ -37,11 +37,20 @@ export class CookieService {
     return ''
   }
  
-  set(name: string, value: string, expireDays: number, path: string = "", secure?: boolean, sameSite?: 'lax' | 'strict' | 'none') {
+  set(
+    name: string,
+    value: string,
+    expireDays: number,
+    secure?: boolean,
+    sameSite?: 'lax' | 'strict' | 'none'
+  ) {
     let d = new Date()
     d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000)
     let expires = "expires=" + d.toUTCString()
-    let cookie = name + "=" + value + "; " + expires + (path.length > 0 ? "; path=" + path : "") + (secure ? "; secure" : "") + (sameSite ? "; samesite=" + sameSite : "; samesite=lax")
+    let cookie = name + "=" + value + "; " + expires
+      + "; domain=" + window.location.host
+      + (secure ? "; secure" : "")
+      + (sameSite ? "; samesite=" + sameSite : "; samesite=lax")
     document.cookie = cookie
   }
 

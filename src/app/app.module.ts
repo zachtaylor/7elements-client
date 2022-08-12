@@ -33,9 +33,9 @@ import { UpdatesComponent } from './page/updates/updates.component'
 import { DeveloperComponent } from './page/developer/developer.component'
 import { ArtistComponent } from './page/developer/artist/artist.component'
 import { NextComponent } from './page/developer/next/next.component'
-import { SinkComponent } from './page/developer/sink/sink.component';
-import { PlayComponent } from './page/play/play.component';
-import { TickerComponent } from './ticker/ticker.component';
+import { SinkComponent } from './page/developer/sink/sink.component'
+import { PlayComponent } from './page/play/play.component'
+import { TickerComponent } from './ticker/ticker.component'
 import { LostComponent } from './page/lost/lost.component'
 
 @NgModule({
@@ -85,7 +85,7 @@ import { LostComponent } from './page/lost/lost.component'
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

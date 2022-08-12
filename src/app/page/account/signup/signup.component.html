@@ -10,10 +10,12 @@
   </article-header>
   <article-body>
     <form [formGroup]="form" (ngSubmit)="submit()">
-      <form-detail *ngIf="showUsernameAvailable()">Username is available!</form-detail>
-      <form-detail *ngIf="showUsernamePending()"><i>Searching...</i></form-detail>
-      <form-detail *ngIf="showUsernameTaken()">Username must be unique</form-detail>
-      <form-detail *ngIf="showUsernameError()">{{f.username.errors.error}}</form-detail>
+      <form-detail *ngIf="form.controls.username.pending"><i>Searching...</i></form-detail>
+      <form-detail *ngIf="form.controls.username.valid">Username is available!</form-detail>
+      <form-detail *ngIf="form.controls.username.errors?.required">Live search enabled</form-detail>
+      <form-detail *ngIf="form.controls.username.errors?.minlength"><b>Minimum length 7</b></form-detail>
+      <form-detail *ngIf="form.controls.username.errors?.async"><b>{{form.controls.username.errors.async}}</b></form-detail>
+      <!-- <form-detail *ngFor="let err of form.controls.username.errors | keyvalue">{{err.key}}</form-detail> -->
       <div class="form-row">
         <label>username</label>
         <input type="text" formControlName="username" required>
@@ -27,14 +29,14 @@
         <label>password</label>
         <input type="password" formControlName="password1" autocomplete="new-password" novalidate>
       </div>
-      <form-detail *ngIf="f.password2.errors?.match">Your password must match above</form-detail>
+      <!-- <form-detail *ngIf="f.password2.errors?.match">Your password must match above</form-detail> -->
       <div class="form-row">
         <label>password</label>
         <input type="password" formControlName="password2" autocomplete="new-password" novalidate>
       </div>
     </form>
     <div class="w100 talr">
-      <button (click)="submit()" [disabled]="f.invalid"><label>Signup</label></button>
+      <button (click)="submit()" [disabled]="!form.valid"><label>Signup</label></button>
     </div>
   </article-body>
 </article>

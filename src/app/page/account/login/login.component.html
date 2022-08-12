@@ -20,7 +20,7 @@
       </div>
     </form>
     <div class="w100 talr">
-      <button (click)="submit()"><label>Login</label></button>
+      <button (click)="submit()" [disabled]="!form.valid"><label>Login</label></button>
     </div>
   </article-body>
 </article>

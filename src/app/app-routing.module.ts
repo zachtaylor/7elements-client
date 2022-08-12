@@ -16,6 +16,7 @@ import { NotFoundComponent } from "./page/notfound/notfound.component"
 import { UpdatesComponent } from "./page/updates/updates.component"
 import { PlayComponent } from "./page/play/play.component"
 import { LostComponent } from "./page/lost/lost.component"
+import { AdminGuard } from "./admin.guard"
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -29,6 +30,9 @@ const routes: Routes = [
   { path: 'decks', component: DecksComponent },
   { path: 'decks/edit/:id', component: DeckEditComponent },
   { path: 'decks/view/:id', component: DeckViewComponent },
+  { path: 'admin', canLoad: [AdminGuard],
+    loadChildren: () => import('./page/admin/admin.module').then(m => m.AdminModule)
+  },
   { path: 'play', component: PlayComponent },
   { path: 'dev', component: DeveloperComponent },
   { path: 'dev/art', component: ArtistComponent },

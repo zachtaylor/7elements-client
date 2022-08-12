@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms'
+import { FormGroup, FormControl } from '@angular/forms'
 import { CookieService } from 'src/app/cookie.service'
 import { WebsocketService } from 'src/app/websocket.service'
+import { environment } from 'env'
 
 @Component({
   selector: 'vii-login',
@@ -10,12 +12,14 @@ import { WebsocketService } from 'src/app/websocket.service'
 })
 export class LoginComponent {
 
-  form = new UntypedFormGroup({
-    username: new UntypedFormControl(''),
-    password: new UntypedFormControl(''),
+  form = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
   })
 
-  constructor(private cookies : CookieService, private ws : WebsocketService) { }
+  constructor(
+    private cookies : CookieService,
+    private ws : WebsocketService) { }
 
   submit() {
     if (!this.form.valid) { return }

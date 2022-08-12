@@ -25,7 +25,7 @@ export class Card {
   costs: Map<number, number>
   body?: {
     attack: number
-    health: number
+    life: number
   }
   powers: Map<number, Power>
   constructor(data: any) {

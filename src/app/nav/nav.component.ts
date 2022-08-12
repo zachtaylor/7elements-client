@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { AdminGuard } from '../admin.guard'
 import { DataService } from '../data.service'
 import { GameService } from '../game.service'
 import { RouterService } from '../router.service'
@@ -13,7 +14,8 @@ export class NavComponent {
   constructor(
     public router : RouterService,
     public data : DataService,
-    public game : GameService
+    public game : GameService,
+    public admin: AdminGuard
   ) { }
 
 }

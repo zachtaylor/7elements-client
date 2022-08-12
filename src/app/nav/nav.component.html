@@ -1,21 +1,24 @@
-<nav *ngIf="!game.id">
-  <a class="nav-item" [class.hilited]="router.path=='/'" routerLink="/">
-    <img adapt="0" src="/img/banner-white.64px.png">
-  </a>
-  <a class="nav-item" [class.hilited]="router.path=='/cards'" routerLink="/cards">
-    <span>Cards</span>
-  </a>
-  <a class="nav-item" [class.hilited]="router.path=='/buy'" routerLink="/buy">
-    <span>Buy</span>
-  </a>
-  <a class="nav-item" [class.hilited]="router.path=='/decks'" routerLink="/decks">
-    <span>Decks</span>
-  </a>
-  <span class="flx1"></span> <!-- spacer -->
-  <ng-container *ngIf="data.account$ | async as account">
+<ng-container *ngIf="data.account$ | async as account">
+  <nav *ngIf="!game.id">
+    <a class="nav-item" [class.hilited]="router.path=='/'" routerLink="/">
+      <img adapt="0" src="/img/banner-white.64px.png">
+    </a>
+    <a *ngIf="admin.is$ | async" class="nav-item" [class.hilited]="router.path=='/admin'" routerLink="/admin">
+      <span>Admin</span>
+    </a>
+    <a class="nav-item" [class.hilited]="router.path=='/cards'" routerLink="/cards">
+      <span>Cards</span>
+    </a>
+    <a class="nav-item" [class.hilited]="router.path=='/buy'" routerLink="/buy">
+      <span>Buy</span>
+    </a>
+    <a class="nav-item" [class.hilited]="router.path=='/decks'" routerLink="/decks">
+      <span>Decks</span>
+    </a>
+    <span class="flx1"></span> <!-- spacer -->
     <a class="nav-item" [class.hilited]="router.path=='/account'" routerLink="/account" fragment="{{account.username?'':'login'}}">
       <span *ngIf="account.username">{{account.username}}</span>
-      <span *ngIf="!account.username">My Account</span>
+      <span *ngIf="!account.username">Account</span>
     </a>
-  </ng-container>
-</nav>
+  </nav>
+</ng-container>

@@ -9,10 +9,10 @@
 <img class="art" src="/img/card/{{card?.id||0}}.jpg">
 <div class="panel">
   <span class="panel-label">{{card?.type}}</span>
-  <span *ngIf="card?.body?.health" class="fltr">
+  <span *ngIf="card?.body" class="fltr">
     <span>{{card.body.attack}}</span>
     <img src="/img/icon/attack.20px.png">
-    <span>{{card.body.health}}</span>
+    <span>{{card.body.life}}</span>
     <img src="/img/icon/life.20px.png">
   </span>
 </div>

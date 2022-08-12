@@ -94,7 +94,9 @@
               "browserTarget": "7tcg:build:production"
             },
             "development": {
-              "browserTarget": "7tcg:build:development"
+              "browserTarget": "7tcg:build:development",
+              "host": "0.0.0.0",
+              "publicHost": "7tcg.local"
             }
           },
           "defaultConfiguration": "development"
